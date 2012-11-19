@@ -1,0 +1,12 @@
+*** Settings ***
+Documentation	This file contains common variables 
+Library		   Selenium2Library
+
+
+
+*** Variables ***
+${browser}  	firefox
+${sel_speed}  	1
+
+
+

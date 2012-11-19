@@ -1,0 +1,21 @@
+*** Settings ***
+Documentation	Testcases for AL login
+Library 		sysVersions.test
+Resource 		Login-KeyVar.txt
+Resource		Commontxt.txt
+
+
+
+
+*** Test Cases ***
+Display System Version Setup  [Documentation]  Sys Info
+	Versions
+
+Go to Angies Page  [Documentation]  Going to Angies List page
+	Open Al Page
+	Input User Name
+	Input Password1
+	Click Login
+	Home Page Should Open
+	Close Browser
+

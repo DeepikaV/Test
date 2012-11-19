@@ -1,0 +1,26 @@
+*** Settings ***
+Documentation	Testcases for AL login
+Resource 		InvalidLogin-KeyVar.txt
+Resource		Commontxt.txt
+Suite Setup		Open Al Page
+Test Template   Login with invalid credentials should fail   
+Suite Teardown	Close Browser 
+
+
+
+*** Test Cases ***
+Invalid Uname and paword    alqatester@angieslist.com  alqatester
+Invalid Pname               Utest05@alutest.com        invalid
+Invalid Uname				test1 			           ${Valid_Password}
+Invalid Uname Pwd 			${Invalid_Uname}		   ${Invalid_Password}
+Empty uname and pwd 		${EMPTY}				   ${EMPTY}
+
+
+
+
+*** Keywords ***
+Login with invalid credentials should fail    
+	[Arguments]   ${Username}		${Password}
+	Input User Name   ${Username}
+	Input Password1	  ${Password}
+	Click Login

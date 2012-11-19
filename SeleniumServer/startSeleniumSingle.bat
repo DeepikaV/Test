@@ -1,0 +1,1 @@
+﻿java -jar C:\Python27\Lib\site-packages\robotframework_seleniumlibrary-2.9.1-py2.7-win32.egg\SeleniumLibrary\lib\selenium-server-standalone-2.25.0.jar -singleWindow -trustAllSSLcertificates -Dwebdriver.firefox.profile=C:\Users\Evan\AppData\Roaming\Mozilla\Firefox\Profiles\a198plsz.selenium

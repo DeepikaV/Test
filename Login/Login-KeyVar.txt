@@ -1,0 +1,27 @@
+*** Settings ***
+Documentation  This file conatins keywords and variables for ALlogin
+Library		   Selenium2Library
+
+*** Variables ***
+${Al_url}	 http://my.angieslist.com/
+
+
+
+*** Keywords ***
+Open Al Page
+	Open Browser    ${AL_url}   ${browser}	
+  	Maximize Browser Window
+	Set Selenium Speed    ${sel_speed}
+	
+Input User Name
+	Input Text  UserNameTextbox  Utest05@alutest.com 
+
+Input Password1
+	Input Password  UserPasswordTextbox  tig3r
+
+Click Login
+	Click Button  ctl00_ContentPlaceHolderMainContent_LoginControl_LoginButton
+
+
+Home Page Should Open
+	Current Frame Contains  Contact Us   

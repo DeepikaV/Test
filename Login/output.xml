@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generated="20121107 14:29:21.563" generator="Robot 2.7.4 (Python 2.7.2 on darwin)">
+<suite source="/Users/dpmv/Development/Robert Frame Work /AngiesList/Login/InvalidLoginTestCase.txt" id="s1" name="InvalidLoginTestCase">
+<kw type="setup" name="InvalidLogin-KeyVar.Open Al Page" timeout="">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="kw" name="Selenium2Library.Open Browser" timeout="">
+<doc>Opens a new browser instance to given URL.</doc>
+<arguments>
+<arg>${AL_url}</arg>
+<arg>${browser}</arg>
+</arguments>
+<msg timestamp="20121107 14:29:21.677" level="INFO">Opening browser 'firefox' to base url 'http://my.angieslist.com/'</msg>
+<status status="PASS" endtime="20121107 14:29:27.947" starttime="20121107 14:29:21.677"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Maximize Browser Window" timeout="">
+<doc>Maximizes current browser window.</doc>
+<arguments>
+</arguments>
+<status status="PASS" endtime="20121107 14:29:27.957" starttime="20121107 14:29:27.948"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Set Selenium Speed" timeout="">
+<doc>Sets the delay in seconds that is waited after each Selenium command.</doc>
+<arguments>
+<arg>${sel_speed}</arg>
+</arguments>
+<status status="PASS" endtime="20121107 14:29:27.957" starttime="20121107 14:29:27.957"></status>
+</kw>
+<status status="PASS" endtime="20121107 14:29:27.957" starttime="20121107 14:29:21.676"></status>
+</kw>
+<test id="s1-t1" timeout="" name="Invalid Uname and paword">
+<kw type="kw" name="Login with invalid credentials should fail" timeout="">
+<doc></doc>
+<arguments>
+<arg>alqatester@angieslist.com</arg>
+<arg>alqatester</arg>
+</arguments>
+<kw type="kw" name="InvalidLogin-KeyVar.Input User Name" timeout="">
+<doc></doc>
+<arguments>
+<arg>${Username}</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Input Text" timeout="">
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<arguments>
+<arg>UserNameTextbox</arg>
+<arg>${Username}</arg>
+</arguments>
+<msg timestamp="20121107 14:29:27.960" level="INFO">Typing text 'alqatester@angieslist.com' into text field 'UserNameTextbox'</msg>
+<status status="PASS" endtime="20121107 14:29:31.048" starttime="20121107 14:29:27.959"></status>
+</kw>
+<status status="PASS" endtime="20121107 14:29:31.048" starttime="20121107 14:29:27.959"></status>
+</kw>
+<kw type="kw" name="InvalidLogin-KeyVar.Input Password1" timeout="">
+<doc></doc>
+<arguments>
+<arg>${Password}</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Input Password" timeout="">
+<doc>Types the given password into text field identified by `locator`.</doc>
+<arguments>
+<arg>UserPasswordTextbox</arg>
+<arg>${Password}</arg>
+</arguments>
+<msg timestamp="20121107 14:29:31.050" level="INFO">Typing password into text field 'UserPasswordTextbox'</msg>
+<status status="PASS" endtime="20121107 14:29:34.109" starttime="20121107 14:29:31.049"></status>
+</kw>
+<status status="PASS" endtime="20121107 14:29:34.109" starttime="20121107 14:29:31.048"></status>
+</kw>
+<kw type="kw" name="InvalidLogin-KeyVar.Click Login" timeout="">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="kw" name="Selenium2Library.Click Button" timeout="">
+<doc>Clicks a button identified by `locator`.</doc>
+<arguments>
+<arg>ctl00_ContentPlaceHolderMainContent_LoginControl_LoginButton</arg>
+</arguments>
+<msg timestamp="20121107 14:29:34.111" level="INFO">Clicking button 'ctl00_ContentPlaceHolderMainContent_LoginControl_LoginButton'.</msg>
+<status status="PASS" endtime="20121107 14:29:38.759" starttime="20121107 14:29:34.111"></status>
+</kw>
+<status status="PASS" endtime="20121107 14:29:38.760" starttime="20121107 14:29:34.110"></status>
+</kw>
+<status status="PASS" endtime="20121107 14:29:38.760" starttime="20121107 14:29:27.958"></status>
+</kw>
+<doc></doc>
+<tags>
+</tags>
+<status status="PASS" endtime="20121107 14:29:38.760" critical="yes" starttime="20121107 14:29:27.958"></status>
+</test>
+<test id="s1-t2" timeout="" name="Invalid Pname">
+<kw type="kw" name="Login with invalid credentials should fail" timeout="">
+<doc></doc>
+<arguments>
+<arg>Utest05@alutest.com</arg>
+<arg>invalid</arg>
+</arguments>
+<kw type="kw" name="InvalidLogin-KeyVar.Input User Name" timeout="">
+<doc></doc>
+<arguments>
+<arg>${Username}</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Input Text" timeout="">
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<arguments>
+<arg>UserNameTextbox</arg>
+<arg>${Username}</arg>
+</arguments>
+<msg timestamp="20121107 14:29:38.764" level="INFO">Typing text 'Utest05@alutest.com' into text field 'UserNameTextbox'</msg>
+<status status="PASS" endtime="20121107 14:29:41.824" starttime="20121107 14:29:38.764"></status>
+</kw>
+<status status="PASS" endtime="20121107 14:29:41.824" starttime="20121107 14:29:38.763"></status>
+</kw>
+<kw type="kw" name="InvalidLogin-KeyVar.Input Password1" timeout="">
+<doc></doc>
+<arguments>
+<arg>${Password}</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Input Password" timeout="">
+<doc>Types the given password into text field identified by `locator`.</doc>
+<arguments>
+<arg>UserPasswordTextbox</arg>
+<arg>${Password}</arg>
+</arguments>
+<msg timestamp="20121107 14:29:41.826" level="INFO">Typing password into text field 'UserPasswordTextbox'</msg>
+<status status="PASS" endtime="20121107 14:29:44.880" starttime="20121107 14:29:41.826"></status>
+</kw>
+<status status="PASS" endtime="20121107 14:29:44.880" starttime="20121107 14:29:41.825"></status>
+</kw>
+<kw type="kw" name="InvalidLogin-KeyVar.Click Login" timeout="">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="kw" name="Selenium2Library.Click Button" timeout="">
+<doc>Clicks a button identified by `locator`.</doc>
+<arguments>
+<arg>ctl00_ContentPlaceHolderMainContent_LoginControl_LoginButton</arg>
+</arguments>
+<msg timestamp="20121107 14:29:44.882" level="INFO">Clicking button 'ctl00_ContentPlaceHolderMainContent_LoginControl_LoginButton'.</msg>
+<status status="PASS" endtime="20121107 14:29:49.708" starttime="20121107 14:29:44.882"></status>
+</kw>
+<status status="PASS" endtime="20121107 14:29:49.708" starttime="20121107 14:29:44.881"></status>
+</kw>
+<status status="PASS" endtime="20121107 14:29:49.708" starttime="20121107 14:29:38.762"></status>
+</kw>
+<doc></doc>
+<tags>
+</tags>
+<status status="PASS" endtime="20121107 14:29:49.709" critical="yes" starttime="20121107 14:29:38.761"></status>
+</test>
+<test id="s1-t3" timeout="" name="Invalid Uname">
+<kw type="kw" name="Login with invalid credentials should fail" timeout="">
+<doc></doc>
+<arguments>
+<arg>test1</arg>
+<arg>${Valid_Password}</arg>
+</arguments>
+<kw type="kw" name="InvalidLogin-KeyVar.Input User Name" timeout="">
+<doc></doc>
+<arguments>
+<arg>${Username}</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Input Text" timeout="">
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<arguments>
+<arg>UserNameTextbox</arg>
+<arg>${Username}</arg>
+</arguments>
+<msg timestamp="20121107 14:29:49.712" level="INFO">Typing text 'test1' into text field 'UserNameTextbox'</msg>
+<status status="PASS" endtime="20121107 14:29:52.765" starttime="20121107 14:29:49.712"></status>
+</kw>
+<status status="PASS" endtime="20121107 14:29:52.765" starttime="20121107 14:29:49.711"></status>
+</kw>
+<kw type="kw" name="InvalidLogin-KeyVar.Input Password1" timeout="">
+<doc></doc>
+<arguments>
+<arg>${Password}</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Input Password" timeout="">
+<doc>Types the given password into text field identified by `locator`.</doc>
+<arguments>
+<arg>UserPasswordTextbox</arg>
+<arg>${Password}</arg>
+</arguments>
+<msg timestamp="20121107 14:29:52.767" level="INFO">Typing password into text field 'UserPasswordTextbox'</msg>
+<status status="PASS" endtime="20121107 14:29:55.817" starttime="20121107 14:29:52.766"></status>
+</kw>
+<status status="PASS" endtime="20121107 14:29:55.817" starttime="20121107 14:29:52.766"></status>
+</kw>
+<kw type="kw" name="InvalidLogin-KeyVar.Click Login" timeout="">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="kw" name="Selenium2Library.Click Button" timeout="">
+<doc>Clicks a button identified by `locator`.</doc>
+<arguments>
+<arg>ctl00_ContentPlaceHolderMainContent_LoginControl_LoginButton</arg>
+</arguments>
+<msg timestamp="20121107 14:29:55.819" level="INFO">Clicking button 'ctl00_ContentPlaceHolderMainContent_LoginControl_LoginButton'.</msg>
+<status status="PASS" endtime="20121107 14:30:00.616" starttime="20121107 14:29:55.819"></status>
+</kw>
+<status status="PASS" endtime="20121107 14:30:00.617" starttime="20121107 14:29:55.818"></status>
+</kw>
+<status status="PASS" endtime="20121107 14:30:00.617" starttime="20121107 14:29:49.710"></status>
+</kw>
+<doc></doc>
+<tags>
+</tags>
+<status status="PASS" endtime="20121107 14:30:00.617" critical="yes" starttime="20121107 14:29:49.709"></status>
+</test>
+<test id="s1-t4" timeout="" name="Invalid Uname Pwd">
+<kw type="kw" name="Login with invalid credentials should fail" timeout="">
+<doc></doc>
+<arguments>
+<arg>${Invalid_Uname}</arg>
+<arg>${Invalid_Password}</arg>
+</arguments>
+<kw type="kw" name="InvalidLogin-KeyVar.Input User Name" timeout="">
+<doc></doc>
+<arguments>
+<arg>${Username}</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Input Text" timeout="">
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<arguments>
+<arg>UserNameTextbox</arg>
+<arg>${Username}</arg>
+</arguments>
+<msg timestamp="20121107 14:30:00.620" level="INFO">Typing text 'test@dummy.com' into text field 'UserNameTextbox'</msg>
+<status status="PASS" endtime="20121107 14:30:03.678" starttime="20121107 14:30:00.620"></status>
+</kw>
+<status status="PASS" endtime="20121107 14:30:03.678" starttime="20121107 14:30:00.619"></status>
+</kw>
+<kw type="kw" name="InvalidLogin-KeyVar.Input Password1" timeout="">
+<doc></doc>
+<arguments>
+<arg>${Password}</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Input Password" timeout="">
+<doc>Types the given password into text field identified by `locator`.</doc>
+<arguments>
+<arg>UserPasswordTextbox</arg>
+<arg>${Password}</arg>
+</arguments>
+<msg timestamp="20121107 14:30:03.680" level="INFO">Typing password into text field 'UserPasswordTextbox'</msg>
+<status status="PASS" endtime="20121107 14:30:06.731" starttime="20121107 14:30:03.680"></status>
+</kw>
+<status status="PASS" endtime="20121107 14:30:06.731" starttime="20121107 14:30:03.679"></status>
+</kw>
+<kw type="kw" name="InvalidLogin-KeyVar.Click Login" timeout="">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="kw" name="Selenium2Library.Click Button" timeout="">
+<doc>Clicks a button identified by `locator`.</doc>
+<arguments>
+<arg>ctl00_ContentPlaceHolderMainContent_LoginControl_LoginButton</arg>
+</arguments>
+<msg timestamp="20121107 14:30:06.733" level="INFO">Clicking button 'ctl00_ContentPlaceHolderMainContent_LoginControl_LoginButton'.</msg>
+<status status="PASS" endtime="20121107 14:30:11.539" starttime="20121107 14:30:06.732"></status>
+</kw>
+<status status="PASS" endtime="20121107 14:30:11.540" starttime="20121107 14:30:06.732"></status>
+</kw>
+<status status="PASS" endtime="20121107 14:30:11.540" starttime="20121107 14:30:00.618"></status>
+</kw>
+<doc></doc>
+<tags>
+</tags>
+<status status="PASS" endtime="20121107 14:30:11.540" critical="yes" starttime="20121107 14:30:00.618"></status>
+</test>
+<test id="s1-t5" timeout="" name="Empty uname and pwd">
+<kw type="kw" name="Login with invalid credentials should fail" timeout="">
+<doc></doc>
+<arguments>
+<arg>${EMPTY}</arg>
+<arg>${EMPTY}</arg>
+</arguments>
+<kw type="kw" name="InvalidLogin-KeyVar.Input User Name" timeout="">
+<doc></doc>
+<arguments>
+<arg>${Username}</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Input Text" timeout="">
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<arguments>
+<arg>UserNameTextbox</arg>
+<arg>${Username}</arg>
+</arguments>
+<msg timestamp="20121107 14:30:11.544" level="INFO">Typing text '' into text field 'UserNameTextbox'</msg>
+<status status="PASS" endtime="20121107 14:30:14.591" starttime="20121107 14:30:11.543"></status>
+</kw>
+<status status="PASS" endtime="20121107 14:30:14.592" starttime="20121107 14:30:11.542"></status>
+</kw>
+<kw type="kw" name="InvalidLogin-KeyVar.Input Password1" timeout="">
+<doc></doc>
+<arguments>
+<arg>${Password}</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Input Password" timeout="">
+<doc>Types the given password into text field identified by `locator`.</doc>
+<arguments>
+<arg>UserPasswordTextbox</arg>
+<arg>${Password}</arg>
+</arguments>
+<msg timestamp="20121107 14:30:14.593" level="INFO">Typing password into text field 'UserPasswordTextbox'</msg>
+<status status="PASS" endtime="20121107 14:30:17.636" starttime="20121107 14:30:14.593"></status>
+</kw>
+<status status="PASS" endtime="20121107 14:30:17.637" starttime="20121107 14:30:14.592"></status>
+</kw>
+<kw type="kw" name="InvalidLogin-KeyVar.Click Login" timeout="">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="kw" name="Selenium2Library.Click Button" timeout="">
+<doc>Clicks a button identified by `locator`.</doc>
+<arguments>
+<arg>ctl00_ContentPlaceHolderMainContent_LoginControl_LoginButton</arg>
+</arguments>
+<msg timestamp="20121107 14:30:17.638" level="INFO">Clicking button 'ctl00_ContentPlaceHolderMainContent_LoginControl_LoginButton'.</msg>
+<status status="PASS" endtime="20121107 14:30:22.389" starttime="20121107 14:30:17.638"></status>
+</kw>
+<status status="PASS" endtime="20121107 14:30:22.389" starttime="20121107 14:30:17.637"></status>
+</kw>
+<status status="PASS" endtime="20121107 14:30:22.389" starttime="20121107 14:30:11.542"></status>
+</kw>
+<doc></doc>
+<tags>
+</tags>
+<status status="PASS" endtime="20121107 14:30:22.389" critical="yes" starttime="20121107 14:30:11.541"></status>
+</test>
+<kw type="teardown" name="Selenium2Library.Close Browser" timeout="">
+<doc>Closes the current browser.</doc>
+<arguments>
+</arguments>
+<status status="PASS" endtime="20121107 14:30:23.403" starttime="20121107 14:30:22.390"></status>
+</kw>
+<doc>Testcases for AL login</doc>
+<metadata>
+</metadata>
+<status status="PASS" endtime="20121107 14:30:23.403" starttime="20121107 14:29:21.564"></status>
+</suite>
+<statistics>
+<total>
+<stat fail="0" pass="5">Critical Tests</stat>
+<stat fail="0" pass="5">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat fail="0" pass="5" id="s1" name="InvalidLoginTestCase">InvalidLoginTestCase</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
