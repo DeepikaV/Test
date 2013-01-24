@@ -1,0 +1,13 @@
+*** Settings ***
+Documentation  Resource file for temp.txt
+Library  SeleniumLibrary
+Library  OperatingSystem
+
+*** Variables ***
+${default_wait_time}  300
+${invite_url}  http://qa2community.ca.angieslist.com/landing/
+${browser}  firefox
+${test_speed}  0.5
+
+${our_block_create_your_account}  submitRegistration
+${our_block_text}  Want to meet new neighbors, find out which are the best local schools

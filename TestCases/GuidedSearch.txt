@@ -1,0 +1,319 @@
+*** Settings ***
+Resource  GuidedSearchVariables.txt
+Resource  myFunctions.txt
+
+*** Keywords ***
+Check Guided Search Landing Page
+    Set Email Message  Issue - Successfully Reached GUIDED SEARCH LANDING PAGE
+    Set Email Subject  AJC Alert GS - MOST POPULAR SERVICES
+    ${test} =  Check ${Guided_Search_Landing_Page} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Close Browser
+    Run Keyword If  '${test}'=='0'  Fatal Error
+    
+   
+ *** Test Cases ***
+Successfully Reached GET THE BEST SERVICE Page
+    Set Selenium Timeout  ${default_wait_time}
+    Open Browser  ${landing_url}  ${browser}
+    Set Selenium Speed  ${test_speed}
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - Successfully Reached GET THE BEST SERVICE Page
+    Set Email Subject  AJC Alert GS - MOST POPULAR SERVICES
+    ${test} =  Check ${get_the_best_service_text} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Close Browser
+    Run Keyword If  '${test}'=='0'  Fatal Error
+
+ User Log In Successfully And Load Guided Search 
+    Input Text  ${get_the_best_service_email}  ${email_address}
+    Input Text  ${get_the_best_service_Password}  ${password}
+    Click Button  ${get_the_best_service_sign_in}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Guided Search Landing Page
+    Get Page Info
+    
+
+Testing MOST POPULAR SERVICES
+
+
+User Reached Electrical
+    Click Link  ${Electrical_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Electrical
+    ${test} =  Check ${Electrical_text} Exists And On Error Send Alert
+    Click Link  ${Search_the_List_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Guided Search Landing Page
+    
+
+User Reached Handymen
+    Click Link  ${Handymen_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Electrical
+    ${test} =  Check ${Handymen_text} Exists And On Error Send Alert
+    Click Link  ${Search_the_List_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Guided Search Landing Page
+
+
+User Reached Heating & A/C
+    Click Link  ${Heating_and_AC_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Electrical
+    ${test} =  Check ${Heating_and_AC_text} Exists And On Error Send Alert
+    Click Link  ${Search_the_List_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Guided Search Landing Page
+
+
+User Reached Housecleaning
+    Click Link  ${Housecleaning_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Electrical
+    ${test} =  Check ${Housecleaning_text} Exists And On Error Send Alert
+    Click Link  ${Search_the_List_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Guided Search Landing Page
+
+
+User Reached Painting - Exterior
+    Click Link  ${Painting_Exterior_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Electrical
+    ${test} =  Check ${Painting_Exterior_text} Exists And On Error Send Alert
+    Click Link  ${Search_the_List_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Guided Search Landing Page
+
+
+User Reached Painting - Interior
+    Click Link  ${Painting_Interior_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Electrical
+    ${test} =  Check ${Painting_Interior_text} Exists And On Error Send Alert
+    Click Link  ${Search_the_List_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Guided Search Landing Page
+
+User Reached Plumbing
+    Click Link  ${Plumbing_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Electrical
+    ${test} =  Check ${Plumbing_text} Exists And On Error Send Alert
+    Click Link  ${Search_the_List_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Guided Search Landing Page
+
+
+User Reached Remodeling - General
+    Click Link  ${Remodeling_General_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Electrical
+    ${test} =  Check ${Remodeling_General_text} Exists And On Error Send Alert
+    Click Link  ${Search_the_List_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Guided Search Landing Page
+
+
+User Reached Remodeling - Kitchen & Bathroom
+    Click Link  ${Remodeling_Kitchen_Bathroom_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Electrical
+    ${test} =  Check ${Remodeling_Kitchen_Bathroom_text} Exists And On Error Send Alert
+    Click Link  ${Search_the_List_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Guided Search Landing Page
+
+
+User Reached Roofing
+    Click Link  ${Roofing_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Electrical
+    ${test} =  Check ${Roofing_text} Exists And On Error Send Alert
+    Click Link  ${Search_the_List_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Guided Search Landing Page
+
+
+User Reached Dentistry - General
+    Click Link  ${Dentistry_General_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Electrical
+    ${test} =  Check ${Dentistry_General_text} Exists And On Error Send Alert
+    Click Link  ${Search_the_List_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Guided Search Landing Page
+
+
+User Reached Dermatology - General
+    Click Link  ${Dermatology_General_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Electrical
+    ${test} =  Check ${Dermatology_General_text} Exists And On Error Send Alert
+    Click Link  ${Search_the_List_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Guided Search Landing Page
+
+User Reached EyeCare - Ophthalmology
+    Click Link  ${EyeCare_Ophthalmology_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Electrical
+    ${test} =  Check ${EyeCare_Ophthalmology_text} Exists And On Error Send Alert
+    Click Link  ${Search_the_List_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Guided Search Landing Page
+
+User Reached EyeCare - Optometry
+    Click Link  ${EyeCare_Optometry_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Electrical
+    ${test} =  Check ${EyeCare_Optometry_text} Exists And On Error Send Alert
+    Click Link  ${Search_the_List_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Guided Search Landing Page
+
+User Reached MentalHealth - Psychiatry
+    Click Link  ${MentalHealth_Psychiatry_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Electrical
+    ${test} =  Check ${MentalHealth_Psychiatry_text} Exists And On Error Send Alert
+    Click Link  ${Search_the_List_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Guided Search Landing Page
+
+User Reached Orthopedics
+    Click Link  ${Orthopedics_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Electrical
+    ${test} =  Check ${Orthopedics_text} Exists And On Error Send Alert
+    Click Link  ${Search_the_List_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Guided Search Landing Page
+
+User Reached Pediatrics - Primary Care
+    Click Link  ${Pediatrics_PrimaryCare_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Electrical
+    ${test} =  Check ${Pediatrics_PrimaryCare_text} Exists And On Error Send Alert
+    Click Link  ${Search_the_List_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Guided Search Landing Page
+
+User Reached Primary Care - Family Medicine
+    Click Link  ${PrimaryCare_FamilyMedicine_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Electrical
+    ${test} =  Check ${PrimaryCare_FamilyMedicine_text} Exists And On Error Send Alert
+    Click Link  ${Search_the_List_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Guided Search Landing Page
+
+
+User Reached Primary Care - Internal Medicine
+    Click Link  ${PrimaryCare_InternalMedicine_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Electrical
+    ${test} =  Check ${PrimaryCare_InternalMedicine_text} Exists And On Error Send Alert
+    Click Link  ${Search_the_List_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Guided Search Landing Page
+
+User Reached Women's Services - Obstetrics & ...
+    Click Link  ${WomenServices_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Electrical
+    ${test} =  Check ${WomenServices_text} Exists And On Error Send Alert
+    Click Link  ${Search_the_List_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Guided Search Landing Page
+
+User Reached Bodywork - Classic Car
+    Click Link  ${Bodywork_ClassicCar_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Electrical
+    ${test} =  Check ${Bodywork_ClassicCar_text} Exists And On Error Send Alert
+    Click Link  ${Search_the_List_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Guided Search Landing Page
+
+
+User Reached Brakes - Classic Car
+    Click Link  ${Brakes_ClassicCar_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Electrical
+    ${test} =  Check ${Brakes_ClassicCar_text} Exists And On Error Send Alert
+    Click Link  ${Search_the_List_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Guided Search Landing Page
+
+User Reached Engine Repair - Classic Car
+    Click Link  ${EngineRepair_ClassicCar_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Electrical
+    ${test} =  Check ${EngineRepair_ClassicCar_text} Exists And On Error Send Alert
+    Click Link  ${Search_the_List_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Guided Search Landing Page
+
+User Reached Paint - Classic Car
+    Click Link  ${Paint_ClassicCar_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Electrical
+    ${test} =  Check ${Paint_ClassicCar_text} Exists And On Error Send Alert
+    Click Link  ${Search_the_List_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Guided Search Landing Page
+
+User Reached Parts Locators - Classic Car
+    Click Link  ${PartsLocators_ClassicCar_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Electrical
+    ${test} =  Check ${PartsLocators_ClassicCar_text} Exists And On Error Send Alert
+    Click Link  ${Search_the_List_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Guided Search Landing Page
+
+User Reached Restorations - Classic Car
+    Click Link  ${Restorations_ClassicCar_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Electrical
+    ${test} =  Check ${Restorations_ClassicCar_text} Exists And On Error Send Alert
+    Click Link  ${Search_the_List_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Guided Search Landing Page
+
+User Reached Service - Classic Car
+    Click Link  ${Service_ClassicCar_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Electrical
+    ${test} =  Check ${Service_ClassicCar_text} Exists And On Error Send Alert
+    Click Link  ${Search_the_List_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Guided Search Landing Page
+
+User Reached Starters - Classic Car
+    Click Link  ${Starters_ClassicCar_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Electrical
+    ${test} =  Check ${Starters_ClassicCar_text} Exists And On Error Send Alert
+    Click Link  ${Search_the_List_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Guided Search Landing Page
+
+User Reached Transmission - Classic Car
+    Click Link  ${Transmission_ClassicCar_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Electrical
+    ${test} =  Check ${Transmission_ClassicCar_text} Exists And On Error Send Alert
+    Click Link  ${Search_the_List_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Guided Search Landing Page
+
+User Reached Upholstery/Carpet - Classic Car
+    Click Link  ${Upholstery_Carpet_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Electrical
+    ${test} =  Check ${Upholstery_Carpet_ClassicCar_text} Exists And On Error Send Alert
+    Click Link  ${Search_the_List_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Guided Search Landing Page
+

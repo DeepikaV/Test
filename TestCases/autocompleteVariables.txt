@@ -1,0 +1,44 @@
+﻿*** Settings ***
+Documentation  Resource file for autocomplete.txt
+Library  SeleniumLibrary
+Library  DatabaseLibrary
+
+*** Variables ***
+${browser}  firefox
+${default_wait_time}  300
+${test_speed}  1
+${short_pause}  5
+${short_sleep}  30
+${micro_sleep}  15
+${landing_url}  https://qa3myangieslist.angieslist.com/AngiesList/Login.aspx?returnurl=http://qa2deals.ca.angieslist.com/
+
+${email_address}  alqatester12345@gmail.com
+${password}  password
+
+${result_count}  numResults
+${count_one}  0
+${count_two}  0
+${count_three}  0
+${count_four}  0
+
+${get_the_best_service_email}  UserNameTextbox
+${get_the_best_service_Password}  UserPasswordTextbox
+${get_the_best_service_sign_in}  ctl00$ContentPlaceHolderMainContent$LoginControl$LoginButton
+${get_the_best_service_text}  Find detailed reviews on roofers, plumbers, house cleaners, dentists and more!
+
+${search_item_empty}  
+${autocomplete_one}  Deck Maintenance
+${search_item_one}  deck maintenance
+${search_item_two}  deck
+${autocomplete_three}  Carpet Cleaning
+${search_item_three}  carpet cleaning
+${search_item_four}  carpe
+${autocomplete_five}  Auto Service
+${search_item_five}  auto service
+${search_item_six}  auto
+
+${deals_and_buynow_window}  Angie's List Deals & BuyNow
+${deals_and_buynow_text}  dealSearchOptions
+${deals_and_buynow_location_box}  locationBox
+${deals_and_buynow_search_box}  searchBoxDeals
+${deals_and_buynow_search_button}  searchSubmit

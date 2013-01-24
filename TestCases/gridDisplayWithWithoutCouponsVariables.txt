@@ -1,0 +1,32 @@
+﻿*** Settings ***
+Documentation  Resource file for gridDisplayWithWithoutCoupons.txt
+Library  SeleniumLibrary
+Library  DatabaseLibrary
+
+*** Variables ***
+${browser}  firefox
+${default_wait_time}  300
+${test_speed}  1
+${short_sleep}  30
+${micro_sleep}  15
+${landing_url}  http://qa2deals.ca.angieslist.com
+
+${email_address}  Patworthington@550college.com
+${password}  550College
+
+${table_id}  dealscontent
+
+${get_the_best_service_email}  UserNameTextbox
+${get_the_best_service_Password}  UserPasswordTextbox
+${get_the_best_service_sign_in}  ctl00$ContentPlaceHolderMainContent$LoginControl$LoginButton
+${get_the_best_service_text}  Find detailed reviews on roofers, plumbers, house cleaners, dentists and more!
+
+${deals_and_buynow_tab}  http://qa2deals.ca.angieslist.com/#q=&loc=111+main+street%2C+Fishers%2C+IN%2C+46038&zipcode=46038&mzid=702&mid=1&primaryLoc=Indianapolis+IN+46038&subscribedLoc=111+main+street%2C+Fishers%2C+IN%2C+46038&v=list&s=8&p=1&source=&mmid=&r=15
+${deals_and_buynow_text}  ctl00_ContentPlaceHolderMainContent_DealZoneListButton
+
+${grid_view_button}  ctl00_ContentPlaceHolderMainContent_DealZoneGridButton
+${grid_view_result_counter}  numResults
+${grid_view_size_selector}  pageRows
+${near_address_neighborhood_city_zip}  ctl00_TopMenuTabId_UniboxSearch_tbnear
+${near_address_neighborhood_city_zip_search_button}  ctl00_TopMenuTabId_UniboxSearch_SearchButton
+${location_with_no_coupons}  550 S Franklin St, Juneau, AK 99801

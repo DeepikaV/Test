@@ -1,0 +1,98 @@
+*** Settings ***
+Resource  gridDisplayWithWithoutCouponsVariables.txt
+Resource  myFunctions.txt
+
+*** Keywords ***
+Check Deals And Buy Now
+    Set Email Message  Issue - Successfully Reached DEALS AND BUY NOW Page
+    ${test} =  Check ${deals_and_buynow_text} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Close Browser
+    Run Keyword If  '${test}'=='0'  Fatal Error
+
+*** Test Cases ***
+Successfully Reached GET THE BEST SERVICE Page
+    Set Selenium Timeout  ${default_wait_time}
+    Open Browser  ${landing_url}  ${browser}
+    Set Selenium Speed  ${test_speed}
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - Successfully Reached GET THE BEST SERVICE Page
+    Set Email Subject  gridDisplayWithWithoutCoupons
+    ${test} =  Check ${get_the_best_service_text} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Close Browser
+    Run Keyword If  '${test}'=='0'  Fatal Error
+
+User Log In Successfully And Load Deals And Buy Now
+    Input Text  ${get_the_best_service_email}  ${email_address}
+    Input Text  ${get_the_best_service_Password}  ${password}
+    Click Button  ${get_the_best_service_sign_in}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Deals And Buy Now
+    Get Page Info
+
+Successfully Switch To 16x4 Grid View
+    Click Button  ${grid_view_button}  don't wait
+    Sleep  ${micro_sleep}
+    Select From List  ${grid_view_size_selector}  64
+    Sleep  ${micro_sleep}
+    Size Of Table ${table_id}
+    ${cell_test}  ${temp} =  Run Keyword And Ignore Error  Should Be Equal As Integers  ${cell_counter}  64
+    Set Email Message  Issue - Successfully Switch To 16x4 Grid View
+    Run Keyword If  '${cell_test}'=='FAIL'  Test Counter Plus Plus
+    Run Keyword If  '${cell_test}'=='FAIL'  Alert
+    Run Keyword If  '${cell_test}'=='FAIL'  Fail
+
+Successfully Switch To 12x4 Grid View
+    Click Button  ${grid_view_button}  don't wait
+    Sleep  ${micro_sleep}
+    Select From List  ${grid_view_size_selector}  48
+    Sleep  ${micro_sleep}
+    Size Of Table ${table_id}
+    ${cell_test}  ${temp} =  Run Keyword And Ignore Error  Should Be Equal As Integers  ${cell_counter}  48
+    Set Email Message  Issue - Successfully Switch To 12x4 Grid View
+    Run Keyword If  '${cell_test}'=='FAIL'  Test Counter Plus Plus
+    Run Keyword If  '${cell_test}'=='FAIL'  Alert
+    Run Keyword If  '${cell_test}'=='FAIL'  Fail
+
+Successfully Switch To 8x4 Grid View
+    Click Button  ${grid_view_button}  don't wait
+    Sleep  ${micro_sleep}
+    Select From List  ${grid_view_size_selector}  32
+    Sleep  ${micro_sleep}
+    Size Of Table ${table_id}
+    ${cell_test}  ${temp} =  Run Keyword And Ignore Error  Should Be Equal As Integers  ${cell_counter}  32
+    Set Email Message  Issue - Successfully Switch To 8x4 Grid View
+    Run Keyword If  '${cell_test}'=='FAIL'  Test Counter Plus Plus
+    Run Keyword If  '${cell_test}'=='FAIL'  Alert
+    Run Keyword If  '${cell_test}'=='FAIL'  Fail
+
+Successfully Switch To 4x4 Grid View
+    Click Button  ${grid_view_button}  don't wait
+    Sleep  ${micro_sleep}
+    Select From List  ${grid_view_size_selector}  16
+    Sleep  ${micro_sleep}
+    Size Of Table ${table_id}
+    ${cell_test}  ${temp} =  Run Keyword And Ignore Error  Should Be Equal As Integers  ${cell_counter}  16
+    Set Email Message  Issue - Successfully Switch To 4x4 Grid View
+    Run Keyword If  '${cell_test}'=='FAIL'  Test Counter Plus Plus
+    Run Keyword If  '${cell_test}'=='FAIL'  Alert
+    Run Keyword If  '${cell_test}'=='FAIL'  Fail
+
+Deal Counter Correspond To Actual Number Of Deals
+    Input Text  ${near_address_neighborhood_city_zip}  ${location_with_no_coupons}
+    Click Button  ${near_address_neighborhood_city_zip_search_button}  dont_wait
+    Sleep  ${micro_sleep}
+    Size Of Table ${table_id}
+    ${deals_found} =  Get Text  ${grid_view_result_counter}
+    ${cell_test}  ${temp} =  Run Keyword And Ignore Error  Should Be Equal As Integers  ${cell_counter}  ${deals_found}
+    Set Email Message  Issue - Deal Counter Correspond To Actual Number Of Deals
+    Run Keyword If  '${cell_test}'=='FAIL'  Test Counter Plus Plus
+    Run Keyword If  '${cell_test}'=='FAIL'  Alert
+    Run Keyword If  '${cell_test}'=='FAIL'  Fail
+
+Send Test Summary And Close Browser
+    ${temp} =  Catenate  Test completed with  ${test_counter}  out of 5 failures!
+    Set Email Message  ${temp}
+    Set Email Subject  AJC Summary gridDisplayWithWithoutCoupons
+    Alert
+    Close Browser
+    Log  ${page_info}

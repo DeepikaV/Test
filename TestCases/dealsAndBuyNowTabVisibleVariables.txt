@@ -1,0 +1,47 @@
+*** Settings ***
+Documentation  Resource file for dealsAndBuyNowTabVisible.txt
+
+*** Variables ***
+${database_api_module_name}  MySQLdb
+${database_host}  50.18.204.183
+${database_port}  2217
+
+${database_alshare_name}  alshare
+${database_alshare_user_name}  aldeals
+${database_alshare_password}  aldeals
+
+${database_alcomm_name}  alcomm
+${database_alcomm_user_name}  alcomm
+${database_alcomm_password}  alcomm
+
+${website_alusercache}  website_alusercache
+${qna_topic}  qna_topic
+
+${browser}  firefox
+${default_wait_time}  60
+${test_speed}  1
+${short_sleep}  30
+${micro_sleep}  15
+${invite_url}  http://qa2community.ca.angieslist.com
+
+
+${user_email}  Patworthington@550college.com
+${user_password}  550College
+
+
+${start_using_our_block}  Start Using Our Block
+
+${our_block_text}  Want to meet new neighbors, find out which are the best local schools
+${online_safety_text}  communityRegistrationStep2
+${members_account_text}  Our Block: Safety, news, events. Neighbors have a lot to talk about
+${success_text}  Success! Thanks for registering for Our Block!
+${done_text}  Now you and your neighbors can start talking at Our Block!
+${get_the_best_service_text}  Find detailed reviews on roofers, plumbers, house cleaners, dentists and more!
+${account_text}  Safety, news, events. Neighbors have a lot to talk about.
+
+${login_here_image}  /static/images/already-an-al-member.jpg
+${get_the_best_service_email}  UserNameTextbox
+${get_the_best_service_Password}  UserPasswordTextbox
+${get_the_best_service_sign_in}  ctl00$ContentPlaceHolderMainContent$LoginControl$LoginButton
+
+${deals_and_buynow_tab}  DealsAndBuyNowHyperLink

@@ -1,0 +1,71 @@
+*** Settings ***
+Documentation  Resource file for inviteaFriendEmail.txt
+Library  SeleniumLibrary  5
+
+*** Variables ***
+${database_api_module_name}  MySQLdb
+${database_name}  alcomm
+${database_user_name}  alcomm
+${database_password}  alcomm
+${database_host}  50.18.204.183
+${database_port}  2217
+
+${database_table_name}  qna_invitelog
+
+${browser}  firefox
+${default_wait_time}  60
+${short_sleep}  30
+${micro_sleep}  15
+${test_speed}  0.5
+${invite_url}  http://qa2community.ca.angieslist.com/landing/
+
+${email_address}  patworthington@550college.com
+${password}  550College
+
+${lightbox_wait_time}  10
+${friend_first_name}  ajctest
+${friend_last_name}  friend
+${friend_email}  ajctestfriend@hotmail.com
+${empty}  
+
+${our_block_text}  Want to meet new neighbors, find out which are the best local schools
+${get_the_best_service_text}  Find detailed reviews on roofers, plumbers, house cleaners, dentists and more!
+${account_text}  Safety, news, events. Neighbors have a lot to talk about.
+
+${login_here_image}  /static/images/already-an-al-member.jpg
+${get_the_best_service_email}  UserNameTextbox
+${get_the_best_service_Password}  UserPasswordTextbox
+${get_the_best_service_sign_in}  ctl00$ContentPlaceHolderMainContent$LoginControl$LoginButton
+${account_invite_a_neighbor_to_our_block}  inviteBtn
+
+${invite_your_neighbors_first_name}  first_name
+${invite_your_neighbors_last_name}  last_name
+${invite_your_neighbors_email}  email
+${invite_your_neighbors_personal_message}  email_message
+${invite_your_neighbors_send_invite}  sendInviteBtn
+
+${invite_your_neighbors_please_enter_at_least_one_recipient}  inviteErrorMessage
+${invite_your_neighbors_please_enter_a_valid_email_address}  inviteErrorMessageForEmail
+${invite_your_neighbors_light_box}  inviteDialog
+${account_sign_out}  sign out
+
+
+
+${hotmail_url}  http://www.hotmail.com
+
+${hotmail_wait_time}  30
+${friend_password}  Welcometoajc
+
+${hotmail_username}  login
+${hotmail_password}  passwd
+${hotmail_sign_in}  SI
+
+${hotmail_image}  Hotmail
+${read_icon}  Unread
+${search_email_box}  c_search_SearchBoxControl_box
+${bing_button}  c_search_SearchBoxControl_go
+${sign_out}  c_signout
+${invite_email_delete}  Delete
+
+${account_name}  ajctest friend
+${invite_email_title}  You have been invited to Our Block!

@@ -1,0 +1,114 @@
+*** Settings ***
+Resource  dealsAndBuyNowTabVisibleVariables.txt
+Resource  myFunctions.txt
+
+*** Keywords ***
+Log In Email ${email} Password ${password}
+    Set Selenium Timeout  ${default_wait_time}
+    Open Browser  ${invite_url}  ${browser}
+    Set Selenium Speed  ${test_speed}
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - Cannot Reach OUR BLOCK Page
+    ${test} =  Check ${our_block_text} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Close Browser
+    Run Keyword If  '${test}'=='0'  Fatal Error
+    Click Image  ${login_here_image}
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - Cannot Reach Get The Best Service Page
+    ${test} =  Check ${get_the_best_service_text} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Close Browser
+    Run Keyword If  '${test}'=='0'  Fatal Error
+    Input Text  ${get_the_best_service_email}  ${email}
+    Input Text  ${get_the_best_service_Password}  ${password}
+    Click Button  ${get_the_best_service_sign_in}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - Account Login Failed
+    ${test} =  Check ${account_text} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Close Browser
+    Run Keyword If  '${test}'=='0'  Fatal Error
+
+*** Test Cases ***
+Configure Deals & Buy Now Tab Test To Be Active
+    ${pairs} =  Catenate  PropertyValue  is  1,22,23
+    ${filter} =  Catenate  DynamicConfigurationId  is  955
+    ${sql_string} =  Update ${alsync_dynamicconfiguration} Set ${pairs} Where ${filter}
+    Execute Sql String ${sql_string} On ${alshare}
+    ${filter} =  Catenate  DynamicConfigurationId  is  955  and  PropertyValue  is  1,22,23
+    ${sql_string} =  Select ${all} From ${alsync_dynamicconfiguration} Where ${filter}
+    Set Email Message  Issue - Configure Deals & Buy Now Tab Test To Be Active
+    Set Email Subject  AJC Alert dealsAndBuyNowTabVisible
+    ${test} =  Check ${sql_string} Is In ${alshare} And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+User2 Log In Successfully
+    Log In Email ${user_email} Password ${user_password}
+    Get Page Info
+
+Configure User To Not Be Able To See The Tab
+    ${pairs} =  Catenate  UsabilityTestAssignmentVersion  is  0
+    ${filter} =  Catenate  MemberID  is  640193
+    ${sql_string} =  Update ${alsync_usabilitytestassignment} Set ${pairs} Where ${filter}
+    Execute Sql String ${sql_string} On ${alshare}
+    ${filter} =  Catenate  MemberID  is  640193  and  UsabilityTestAssignmentVersion  is  0
+    ${sql_string} =  Select ${all} From ${alsync_usabilitytestassignment} Where ${filter}
+    Set Email Message  Issue - Configure User To Not Be Able To See The Tab
+    ${test} =  Check ${sql_string} Is In ${alshare} And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+User Cannot See Tab
+    Go To  ${invite_url}
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Cannot See Tab
+    ${test} =  Check ${deals_and_buynow_tab} Invisible And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+Configure User To Be Able To See The Tab
+    ${pairs} =  Catenate  UsabilityTestAssignmentVersion  is  1
+    ${filter} =  Catenate  MemberID  is  640193
+    ${sql_string} =  Update ${alsync_usabilitytestassignment} Set ${pairs} Where ${filter}
+    Execute Sql String ${sql_string} On ${alshare}
+    ${filter} =  Catenate  MemberID  is  640193  and  UsabilityTestAssignmentVersion  is  1
+    ${sql_string} =  Select ${all} From ${alsync_usabilitytestassignment} Where ${filter}
+    Set Email Message  Issue - Configure User To Be Able To See The Tab
+    ${test} =  Check ${sql_string} Is In ${alshare} And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+User Can Now See Tab
+    Go To  ${invite_url}
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Can Now See Tab
+    ${test} =  Check ${deals_and_buynow_tab} Visible And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+Configure Deals & Buy Now Tab To Not Show To Anybody
+    ${pairs} =  Catenate  PropertyValue  is  ${nothing}
+    ${filter} =  Catenate  DynamicConfigurationId  is  955
+    ${sql_string} =  Update ${alsync_dynamicconfiguration} Set ${pairs} Where ${filter}
+    Execute Sql String ${sql_string} On ${alshare}
+    ${filter} =  Catenate  DynamicConfigurationId  is  955  and  PropertyValue  is  ${nothing}
+    ${sql_string} =  Select ${all} From ${alsync_dynamicconfiguration} Where ${filter}
+    Set Email Message  Issue - Configure Deals & Buy Now Tab To Not Show To Anybody
+    ${test} =  Check ${sql_string} Is In ${alshare} And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+User Cannot See Tab Even Though They're In The 'B' Group For The Test
+    Go To  ${invite_url}
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Cannot See Tab Even Though They're In The 'B' Group For The Test
+    ${test} =  Check ${deals_and_buynow_tab} Invisible And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+Send Test Summary
+    ${temp} =  Catenate  Test completed with  ${test_counter}  failures!
+    Set Email Message  ${temp}
+    Set Email Subject  AJC Summary dealsAndBuyNowTabVisible
+    Alert
+    Close Browser
+    Log  ${page_info}

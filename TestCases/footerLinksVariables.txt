@@ -1,0 +1,133 @@
+*** Settings ***
+Documentation  Resource file for postAndResponse.txt
+Library  SeleniumLibrary
+Library  DatabaseLibrary
+
+*** Variables ***
+${browser}  firefox
+${default_wait_time}  300
+${test_speed}  1
+${short_sleep}  30
+${micro_sleep}  15
+${landing_url}  http://qa2deals.ca.angieslist.com
+
+${email_address}  Patworthington@550college.com
+${password}  550College
+
+${get_the_best_service_email}  UserNameTextbox
+${get_the_best_service_Password}  UserPasswordTextbox
+${get_the_best_service_sign_in}  ctl00$ContentPlaceHolderMainContent$LoginControl$LoginButton
+${get_the_best_service_text}  Find detailed reviews on roofers, plumbers, house cleaners, dentists and more!
+
+${deals_and_buynow_tab}  http://qa2deals.ca.angieslist.com/#q=&loc=111+main+street%2C+Fishers%2C+IN%2C+46038&zipcode=46038&mzid=702&mid=1&primaryLoc=Indianapolis+IN+46038&subscribedLoc=111+main+street%2C+Fishers%2C+IN%2C+46038&v=list&s=8&p=1&source=&mmid=&r=15
+${deals_and_buynow_text}  ctl00_ContentPlaceHolderMainContent_HeaderNavigation
+
+${my_favorites_link}  My Favorites
+
+${my_favorites_text}  My Favorite Providers and Notifications
+
+${my_purchase_history_link}  My Purchase History
+${my_purchase_history_text}  My Deals & BuyNow
+
+${my_search_history_link}  My Search History
+${my_search_history_text}  My Search History
+
+${my_messages_link}  My Messages
+${my_messages_text}  Heads Up Alerts
+
+${my_reviews_link}  My Reviews
+${my_reviews_text}  ctl00_ContentPlaceHolderMainContent_arg_ReportCount
+
+${my_complaint_resolutions_link}  My Complaint Resolutions
+${my_complaint_resolutions_text}  Complaint Resolution Process
+
+${manage_my_account_link}  Manage My Account
+${manage_my_account_text}  Manage My Subscriptions
+
+${manage_my_subscriptions_link}  Manage My Subscriptions
+${manage_my_subscriptions_text}  Manage My Subscriptions
+
+${contact_preferences_link}  Contact Preferences
+${contact_preferences_text}  Email and Phone Preferences
+
+${invite_a_friend_link}  Invite a Friend
+${invite_a_friend_text}  Know someone who should join Angie’s List? We’ve got two easy ways for you to invite them!
+
+${gift_memberships_window_label}  Gift Memberships
+${gift_memberships_link}  Gift Memberships
+${gift_memberships_text}  ctl00_ContentPlaceHolderMainContent_hasNoGift
+
+${local_deals_and_buynow_link}  Local Deals and BuyNow
+${local_deals_and_buynow_text}  ctl00_ContentPlaceHolderMainContent_HeaderNavigation
+
+${member_benefits_link}  Member Benefits
+${member_benefits_text}  For you, our members
+
+${the_big_deal_website_window_label}  Local Deals, Coupons, Save up to 70% from Top-Rated Contractors on Angie's List
+${the_big_deal_website_link}  The Big Deal™ Website
+${the_big_deal_website_text}  save up to 80% on quality services from highly rated contractors and doctors
+
+${advanced_search_link}  Advanced Search
+${advanced_search_text}  Advanced Search
+
+${all_categories_link}  All Categories
+${all_categories_text}  Angie's List Classic Cars
+
+${write_a_review_link}  Write a Review
+${write_a_review_text}  Write a Review
+
+${angies_list_answers_window_label}  Angies List Answers – Ask Health & Home Improvement Questions
+${angies_list_answers_link}  Angie's List Answers
+${angies_list_answers_text}  Ask A Question
+
+${angies_list_magazine_window_label}  Home, Health, and Auto Tips from our Best Rated Experts | Angie's List
+${angies_list_magazine_link}  Angie's List Magazine
+${angies_list_magazine_text}  Health & Wellness
+
+${angies_list_videos_window_label}  Video Library
+${angies_list_videos_link}  Angie's List Videos
+${angies_list_videos_text}  See More Videos
+
+${angies_list_marketplace_window_label}  Angie's List - Marketplace
+${angies_list_marketplace_link}  Angie's List Marketplace
+${angies_list_marketplace_text}  Welcome to Angie's List Marketplace
+
+${iphone_and_ipad_app_window_label}  Angie's List for iPhone, iPod touch, and iPad on the iTunes App Store
+${iphone_and_ipad_app_link}  iPhone and iPad App
+${iphone_and_ipad_app_text}  This app is designed for both iPhone and iPad
+
+${android_app_window_label}  Angie's List Mobile - Android Apps on Google Play
+${android_app_link}  Android App
+${android_app_text}  Angie's List Mobile
+
+${faq_window_label}  Frequently Asked Questions
+${faq_link}  FAQ
+${faq_text}  Search the FAQ:
+
+${contact_us_window_label}  Talk Directly with an Angie's List Neighborhood Specialist
+${contact_us_link}  Contact Us
+${contact_us_text}  We want to hear from you!
+
+${angie_hicks_window_label}  Meet the Angie behind Angie's List, Angies List
+${angie_hicks_link}  Angie Hicks
+${angie_hicks_text}  Founder of Angie's List
+
+${press_center_window_label}  Angie's List News on Contractors and Doctors
+${press_center_link}  Press Center
+${press_center_text}  Press Releases
+
+${careers_window_label}  Careers at Angie's List
+${careers_link}  Careers
+${careers_text}  main_content
+
+${investor_relations_window_label}  Angie's List - Investor Relations
+${investor_relations_link}  Investor Relations
+${investor_relations_text}  Investor Relations
+
+${privacy_policy_window_label}  Angie's List Privacy Policy
+${privacy_policy_link}  Privacy Policy
+${privacy_policy_text}  Angie's List Privacy Policy
+
+${membership_agreement_window_label}  Angie's List has contractor and doctor reviews in your area | Enter zip code | Angies List
+${membership_agreement_link}  Membership Agreement
+${membership_agreement_text}  Angie's List is all about local. Please tell us your zip code so we can give you the most relevant information.

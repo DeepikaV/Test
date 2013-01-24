@@ -1,0 +1,12 @@
+*** Settings ***
+Documentation  This is an example using Franz See Robot Framework Database Library
+Resource  databaseExampleVariables.txt
+
+
+*** Test Cases ***
+Connect To Database
+    Connect To Database  ${database_api_module_name}  ${database_name}  ${database_user_name}  ${database_password}  ${database_host}  ${database_port}
+
+Check Database Record
+    ${sql_string} =  Catenate  SELECT id FROM  ${database_table_name}  WHERE first_name =  ${first_name}  AND last_name =  ${last_name}
+    Check If Exists In Database  ${sql_string}

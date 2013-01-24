@@ -1,0 +1,16 @@
+*** Settings ***
+Documentation  This is a myFunction test.
+Resource  myFunctions2.txt
+
+*** Variables ***
+${fiji_sift_command}  C:\Users\Evan\Downloads\fiji-win32\Fiji.app\ImageJ-win32.exe -macro imageCompare "C:\Users\Evan\Desktop\CompareImages\V-C.png C:\Users\Evan\Desktop\CompareImages\C.png"
+
+*** Test Cases ***
+Test One
+    ${query} =  Convert To String  (HEADER Subject "You have been invited to Our Block!")
+    ${email_id} =  Search Email  ${query}
+
+
+
+Test Two
+    Run  ${fiji_sift_command}

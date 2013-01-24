@@ -1,0 +1,25 @@
+﻿*** Settings ***
+Documentation  Resource file for postAndResponse.txt
+Library  SeleniumLibrary
+Library  DatabaseLibrary
+
+*** Variables ***
+${browser}  firefox
+${default_wait_time}  300
+${test_speed}  1
+${short_sleep}  30
+${micro_sleep}  15
+${landing_url}  https://qa3myangieslist.angieslist.com/AngiesList/Login.aspx?returnurl=http://qa2deals.ca.angieslist.com/
+
+${email_address}  alqatester12345@gmail.com
+${password}  password
+
+${get_the_best_service_email}  UserNameTextbox
+${get_the_best_service_Password}  UserPasswordTextbox
+${get_the_best_service_sign_in}  ctl00$ContentPlaceHolderMainContent$LoginControl$LoginButton
+${get_the_best_service_text}  Find detailed reviews on roofers, plumbers, house cleaners, dentists and more!
+
+${search_item}  garage
+${deals_and_buynow_text}  ctl00_ContentPlaceHolderMainContent_DealZoneListButton
+${deals_and_buynow_search_box}  searchBoxDeals
+${deals_and_buynow_search_button}  searchSubmit

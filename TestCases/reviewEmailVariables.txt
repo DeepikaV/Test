@@ -1,0 +1,584 @@
+﻿*** Settings ***
+Documentation  Resource file for reviewEmail.txt
+Library  myFunctions2.py
+Library  String
+Library  Collections
+Library  SeleniumLibrary
+
+*** Variables ***
+${browser}  firefox
+${default_wait_time}  300
+${test_speed}  1
+${short_pause}  5
+${micro_sleep}  15
+${short_sleep}  30
+${long_sleep}  60
+${angieslist_android_url}  http://play.google.com/store/apps/details?id=com.angieslist.android.activity&hl=en
+
+${source_length}  
+${string}  
+@{android_review_buffer}  
+@{review_list}  
+${android_review_email}  
+${subject}  
+${message}  
+${destination_address}  paqatester10@hotmail.com
+
+${angieslist_android_text}  Angie's List
+${angieslist_android_read_all_user_reviews}  Read All User Reviews
+${angieslist_android_review_block}  num-pagination-content
+
+${pass}  PASS
+${fail}  FAIL
+${comma}  ,
+${colon}  :
+${hyphen}  -
+${right_arrow}  >
+${left_arrow}  <
+${last_page}  0
+${infinity}  1000
+${blank}  
+
+${android_pagination_review_list_start}  doc-user-reviews-list
+${android_pagination_review_list_end}  num-pagination-control
+${android_review_start}  review-body-column goog-inline-block
+${android_review_end}  review-footer goog-inline-block
+${android_review_next_page}  <div class="num-pagination-page-button num-pagination-next goog-inline-block" tabindex="0"
+
+${android_review_date}  doc-review-date
+${android_review_author}  <strong
+${android_review_rating}  ratings goog-inline-block
+${android_review_title}  review-title
+${android_review_text}  review-text
+${android_review_page_id}  :g.pageId-
+
+
+
+${angieslist_iphone_url}  http://www.google.ca/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&ved=0CEAQFjAA&url=https%3A%2F%2Fitunes.apple.com%2Fus%2Fapp%2Fangies-list%2Fid389294696%3Fmt%3D8&ei=iML6UImBOqy42QXwrYGYDA&usg=AFQjCNHhsTT2Y5-9B0QKFYJ1zFvh4k2VGw&bvm=bv.41248874,d.b2I
+${angieslist_iphone_text}  Angie's List
+${iphone_review_list_start}  Customer Reviews
+${iphone_review_list_end}  <div metrics-loc="Swoosh_" rows="1" class="swoosh lockup-container application large"
+${iphone_review_start}  <div more-text="More" class="customer-review"
+${iphone_review_end}  </p
+
+${iphone_review_title}  <span class="customerReviewTitle
+${iphone_review_rating}  <div class="rating" role="img" tabindex="-1" aria-label="
+${iphone_review_author}  <span class="user-info"
+${iphone_review_text}  <p class="content" will-truncate-max-height="0" data-text-truncate-lines="5"
+
+@{iphone_review_buffer}  
+${iphone_review_email}  
+
+*** Keywords ***
+New Page Limit
+    ${temp} =  Convert To Integer  ${string}
+    ${temp} =  Set Variable  ${temp - 1}
+    Set Suite Variable  ${string}  ${temp}
+
+Number Of Android Review Page
+    ${page_source} =  Get Source
+    ${string_list} =  Split String  ${page_source}  ${right_arrow}
+    ${string_list_length} =  Get Length  ${string_list}
+    Set Suite Variable  ${source_length}  ${string_list_length / 2}
+    : FOR  ${index}  IN RANGE  ${source_length}  ${string_list_length}
+    \    ${string} =  Get From List  ${string_list}  ${index}
+    \    ${hit_last_page}  ${temp} =  Run Keyword And Ignore Error  Should Contain  ${string}  ${android_review_next_page}
+    \    ${temp} =  Set Variable  ${index - 2}
+    \    ${string} =  Get From List  ${string_list}  ${temp}
+    \    ${string} =  Fetch From Left  ${string}  ${left_arrow}
+    \    Run Keyword If  '${hit_last_page}'=='PASS'  New Page Limit
+    \    Run Keyword If  '${hit_last_page}'=='PASS'  Set Suite Variable  ${last_page}  ${string}
+    \    Run Keyword If  '${hit_last_page}'=='PASS'  Exit For Loop
+
+Last Android Review Page
+    Number Of Android Review Page
+    ${last_count} =  Set Variable  ${last_page}
+    : FOR  ${index}  IN RANGE  0  ${infinity}
+    \    ${string} =  Convert To String  ${last_page}
+    \    ${temp} =  Catenate  SEPARATOR=  ${android_review_page_id}  ${string}
+    \    Click Element  ${temp}  don't wait
+    \    Sleep  ${short_pause}
+    \    Number Of Android Review Page
+    \    Run Keyword If  ${last_count}==${last_page}  Exit For Loop
+    \    Run Keyword Unless  ${last_count}==${last_page}  Set Suite Variable  ${last_count}  ${last_page}
+
+Load Android Review Buffer
+    Set Test Variable  ${review_author_done}  ${fail}
+    Set Test Variable  ${review_date_done}  ${fail}
+    Set Test Variable  ${review_spec_done}  ${fail}
+    Set Test Variable  ${review_rating_done}  ${fail}
+    Set Test Variable  ${review_title_done}  ${fail}
+    Set Test Variable  ${review_text_done}  ${fail}
+
+    Set Test Variable  ${is_review_author_flag}  ${fail}
+    Set Test Variable  ${is_review_date_flag}  ${fail}
+    Set Test Variable  ${is_review_spec_flag}  ${fail}
+    Set Test Variable  ${is_review_rating_flag}  ${fail}
+    Set Test Variable  ${is_review_title_flag}  ${fail}
+    Set Test Variable  ${is_review_text_flag}  ${fail}
+
+    Set Test Variable  ${inside_list}  ${fail}
+    Set Test Variable  ${inside_list_item}  ${fail}
+
+    ${page_source} =  Get Source
+    ${string_list} =  Split String  ${page_source}  ${right_arrow}
+    ${string_list_length} =  Get Length  ${string_list}
+    Set Suite Variable  ${source_length}  ${string_list_length / 8}
+    : FOR  ${index}  IN RANGE  ${source_length}  ${string_list_length}
+    \    ${string} =  Get From List  ${string_list}  ${index}
+    \    ${list_start}  ${temp} =  Run Keyword And Ignore Error  Should Contain  ${string}  ${android_pagination_review_list_start}
+    \    ${list_end}  ${temp} =  Run Keyword And Ignore Error  Should Contain  ${string}  ${android_pagination_review_list_end}
+    \    ${list_item_start}  ${temp} =  Run Keyword And Ignore Error  Should Contain  ${string}  ${android_review_start}
+    \    ${list_item_end}  ${temp} =  Run Keyword And Ignore Error  Should Contain  ${string}  ${android_review_end}
+    \
+    \    ${is_review_date}  ${temp} =  Run Keyword And Ignore Error  Should Contain  ${string}  ${android_review_date}
+    \    ${is_review_author}  ${temp} =  Run Keyword And Ignore Error  Should Contain  ${string}  ${android_review_author}
+    \    ${is_review_rating}  ${temp} =  Run Keyword And Ignore Error  Should Contain  ${string}  ${android_review_rating}
+    \    ${is_review_title}  ${temp} =  Run Keyword And Ignore Error  Should Contain  ${string}  ${android_review_title}
+    \    ${is_review_text}  ${temp} =  Run Keyword And Ignore Error  Should Contain  ${string}  ${android_review_text}
+    \
+    \    Run Keyword If  '${inside_list}'=='${fail}'  Set Test Variable  ${inside_list}  ${list_start}
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${list_end}'=='${pass}'  Exit For Loop
+    \
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${list_item_start}'=='${pass}'  Set Test Variable  ${review_date_done}  ${fail}
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${list_item_start}'=='${pass}'  Set Test Variable  ${review_author_done}  ${fail}
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${list_item_start}'=='${pass}'  Set Test Variable  ${review_spec_done}  ${fail}
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${list_item_start}'=='${pass}'  Set Test Variable  ${review_rating_done}  ${fail}
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${list_item_start}'=='${pass}'  Set Test Variable  ${review_title_done}  ${fail}
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${list_item_start}'=='${pass}'  Set Test Variable  ${review_text_done}  ${fail}
+    \
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${list_item_start}'=='${pass}'  Set Test Variable  ${inside_list_item}  ${pass}
+    \    Run Keyword If  '${inside_list_item}'=='${pass}'
+    \    ...    Run Keyword If  '${list_item_end}'=='${pass}'  Set Test Variable  ${inside_list_item}  ${fail}
+    \
+    \    Run Keyword If  '${inside_list_item}'=='${pass}'
+    \    ...    Run Keyword If  '${is_review_date}'=='${pass}'
+    \    ...    Run Keyword If  '${review_author_done}'=='${fail}'  Android Append Blank Space
+    \    Run Keyword If  '${inside_list_item}'=='${pass}'
+    \    ...    Run Keyword If  '${is_review_date}'=='${pass}'
+    \    ...    Run Keyword If  '${review_author_done}'=='${fail}'  Set Test Variable  ${review_author_done}  ${pass}
+    \    Run Keyword If  '${inside_list_item}'=='${pass}'
+    \    ...    Run Keyword If  '${is_review_rating}'=='${pass}'
+    \    ...    Run Keyword If  '${review_spec_done}'=='${fail}'  Android Append Blank Space
+    \    Run Keyword If  '${inside_list_item}'=='${pass}'
+    \    ...    Run Keyword If  '${is_review_rating}'=='${pass}'
+    \    ...    Run Keyword If  '${review_spec_done}'=='${fail}'  Set Test Variable  ${review_spec_done}  ${pass}
+    \    Run Keyword If  '${inside_list_item}'=='${pass}'
+    \    ...    Run Keyword If  '${is_review_title}'=='${pass}'
+    \    ...    Run Keyword If  '${review_rating_done}'=='${fail}'  Android Append Blank Space
+    \    Run Keyword If  '${inside_list_item}'=='${pass}'
+    \    ...    Run Keyword If  '${is_review_title}'=='${pass}'
+    \    ...    Run Keyword If  '${review_rating_done}'=='${fail}'  Set Test Variable  ${review_rating_done}  ${pass}
+    \    Run Keyword If  '${inside_list_item}'=='${pass}'
+    \    ...    Run Keyword If  '${is_review_text}'=='${pass}'
+    \    ...    Run Keyword If  '${review_title_done}'=='${fail}'  Android Append Blank Space
+    \    Run Keyword If  '${inside_list_item}'=='${pass}'
+    \    ...    Run Keyword If  '${is_review_text}'=='${pass}'
+    \    ...    Run Keyword If  '${review_title_done}'=='${fail}'  Set Test Variable  ${review_title_done}  ${pass}
+    \    Run Keyword If  '${list_item_end}'=='${pass}'
+    \    ...    Run Keyword If  '${review_text_done}'=='${fail}'  Android Append Blank Space
+    \    Run Keyword If  '${list_item_end}'=='${pass}'
+    \    ...    Run Keyword If  '${review_text_done}'=='${fail}'  Set Test Variable  ${review_text_done}  ${pass}
+    \
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${inside_list_item}'=='${pass}'
+    \    ...    Run Keyword If  '${is_review_rating}'=='${pass}'  Android Append Review Rating  ${string}
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${inside_list_item}'=='${pass}'
+    \    ...    Run Keyword If  '${is_review_rating}'=='${pass}'  Set Test Variable  ${review_rating_done}  ${pass}
+    \
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${inside_list_item}'=='${pass}'
+    \    ...    Run Keyword If  '${is_review_spec_flag}'=='${pass}'  Android Append Review Spec  ${string}
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${inside_list_item}'=='${pass}'
+    \    ...    Run Keyword If  '${is_review_spec_flag}'=='${pass}'  Set Test Variable  ${review_spec_done}  ${pass}
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${inside_list_item}'=='${pass}'
+    \    ...    Run Keyword If  '${is_review_spec_flag}'=='${pass}'  Set Test Variable  ${is_review_spec_flag}  ${fail}
+    \
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${inside_list_item}'=='${pass}'
+    \    ...    Run Keyword If  '${is_review_date_flag}'=='${pass}'  Android Append Review Date  ${string}
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${inside_list_item}'=='${pass}'
+    \    ...    Run Keyword If  '${is_review_date_flag}'=='${pass}'  Set Test Variable  ${review_date_done}  ${pass}
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${inside_list_item}'=='${pass}'
+    \    ...    Run Keyword If  '${is_review_date_flag}'=='${pass}'  Set Test Variable  ${is_review_spec_flag}  ${pass}
+    \
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${inside_list_item}'=='${pass}'
+    \    ...    Run Keyword If  '${is_review_author_flag}'=='${pass}'  Android Append Review Author  ${string}
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${inside_list_item}'=='${pass}'
+    \    ...    Run Keyword If  '${is_review_author_flag}'=='${pass}'  Set Test Variable  ${review_author_done}  ${pass}
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${inside_list_item}'=='${pass}'
+    \    ...    Run Keyword If  '${is_review_title_flag}'=='${pass}'  Android Append Review Title  ${string}
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${inside_list_item}'=='${pass}'
+    \    ...    Run Keyword If  '${is_review_title_flag}'=='${pass}'  Set Test Variable  ${review_title_done}  ${pass}
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${inside_list_item}'=='${pass}'
+    \    ...    Run Keyword If  '${is_review_text_flag}'=='${pass}'  Android Append Review Text  ${string}
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${inside_list_item}'=='${pass}'
+    \    ...    Run Keyword If  '${is_review_text_flag}'=='${pass}'  Set Test Variable  ${review_text_done}  ${pass}
+    \
+    \    Set Test Variable  ${is_review_date_flag}  ${fail}
+    \    Set Test Variable  ${is_review_author_flag}  ${fail}
+    \    Set Test Variable  ${is_review_title_flag}  ${fail}
+    \    Set Test Variable  ${is_review_text_flag}  ${fail}
+    \
+    \    Run Keyword If  '${is_review_date}'=='${pass}'  Set Test Variable  ${is_review_date_flag}  ${pass}
+    \    Run Keyword If  '${is_review_author}'=='${pass}'  Set Test Variable  ${is_review_author_flag}  ${pass}
+    \    Run Keyword If  '${is_review_title}'=='${pass}'  Set Test Variable  ${is_review_title_flag}  ${pass}
+    \    Run Keyword If  '${is_review_text}'=='${pass}'  Set Test Variable  ${is_review_text_flag}  ${pass}
+    ${temp} =  Get From List  ${android_review_buffer}  0
+    Run Keyword If  '${temp}'=='${blank}'  Remove From List  ${android_review_buffer}  0
+
+Android Append Review Author  [Arguments]  ${temp}
+    ${temp} =  Fetch From Left  ${temp}  ${left_arrow}
+    Append To List  ${android_review_buffer}  ${temp}
+
+Android Append Review Date  [Arguments]  ${temp}
+    ${temp} =  Fetch From Left  ${temp}  ${left_arrow}
+    ${temp} =  Replace String  ${temp}  - January  1,
+    ${temp} =  Replace String  ${temp}  - February  2,
+    ${temp} =  Replace String  ${temp}  - March  3,
+    ${temp} =  Replace String  ${temp}  - April  4,
+    ${temp} =  Replace String  ${temp}  - May  5,
+    ${temp} =  Replace String  ${temp}  - June  6,
+    ${temp} =  Replace String  ${temp}  - July  7,
+    ${temp} =  Replace String  ${temp}  - August  8,
+    ${temp} =  Replace String  ${temp}  - September  9,
+    ${temp} =  Replace String  ${temp}  - October  10,
+    ${temp} =  Replace String  ${temp}  - November  11,
+    ${temp} =  Replace String  ${temp}  - December  12,
+    ${date_list} =  Split String  ${temp}  ${comma}
+    ${year} =  Get From List  ${date_list}  2
+    ${year} =  Get Substring  ${year}  1
+    ${month} =  Get From List  ${date_list}  0
+    ${month} =  Get Substring  ${month}  1
+    ${day} =  Get From List  ${date_list}  1
+    ${day} =  Get Substring  ${day}  1
+    ${temp} =  Catenate  SEPARATOR=  ${year}  -  ${month}  -  ${day}
+    Append To List  ${android_review_buffer}  ${temp}
+
+Android Append Review Spec  [Arguments]  ${temp}
+    ${temp} =  Fetch From Left  ${temp}  ${left_arrow}
+    ${temp} =  Get Substring  ${temp}  3
+    Append To List  ${android_review_buffer}  ${temp}
+
+Android Append Review Rating  [Arguments]  ${temp}
+    ${temp} =  Fetch From Right  ${temp}  ${colon}
+    ${temp} =  Get Substring  ${temp}  1  -1
+    Append To List  ${android_review_buffer}  ${temp}
+
+Android Append Review Title  [Arguments]  ${temp}
+    ${temp} =  Fetch From Left  ${temp}  ${left_arrow}
+    Append To List  ${android_review_buffer}  ${temp}
+
+Android Append Review Text  [Arguments]  ${temp}
+    ${temp} =  Fetch From Left  ${temp}  ${left_arrow}
+    Append To List  ${android_review_buffer}  ${temp}
+
+Android Append Blank Space
+    Append To List  ${android_review_buffer}  ${blank}
+
+Clear Android Review Buffer
+    ${temp} =  Create List  
+    Set Suite Variable  @{android_review_buffer}  ${temp}
+
+Clear Review List
+    ${temp} =  Create List  
+    Set Suite Variable  @{review_list}  ${temp}
+
+Filter Android Review By Date  [Arguments]  ${threshold_yyyy-mm-dd}
+    ${threshold_yyyy-mm-dd_list} =  Split String  ${threshold_yyyy-mm-dd}  ${hyphen}
+    ${temp} =  Get From List  ${threshold_yyyy-mm-dd_list}  0
+    ${threshold_yyyy} =  Convert To Integer  ${temp}
+    ${temp} =  Get From List  ${threshold_yyyy-mm-dd_list}  1
+    ${threshold_mm} =  Convert To Integer  ${temp}
+    ${temp} =  Get From List  ${threshold_yyyy-mm-dd_list}  2
+    ${threshold_dd} =  Convert To Integer  ${temp}
+    ${android_review_buffer_length} =  Get Length  ${android_review_buffer}
+    : FOR  ${date_index}  IN RANGE  1  ${android_review_buffer_length}  6
+    \    ${review_yyyy-mm-dd} =  Get From List  ${android_review_buffer}  ${date_index}
+    \    ${review_yyyy-mm-dd_list} =  Split String  ${review_yyyy-mm-dd}  ${hyphen}
+    \    ${temp} =  Get From List  ${review_yyyy-mm-dd_list}  0
+    \    ${review_yyyy} =  Convert To Integer  ${temp}
+    \    ${temp} =  Get From List  ${review_yyyy-mm-dd_list}  1
+    \    ${review_mm} =  Convert To Integer  ${temp}
+    \    ${temp} =  Get From List  ${review_yyyy-mm-dd_list}  2
+    \    ${review_dd} =  Convert To Integer  ${temp}
+    \
+    \    ${is_below_threshold} =  Set Variable  ${fail}
+    \    Run Keyword If  ${review_yyyy}>${threshold_yyyy}  Set Test Variable  ${is_below_threshold}  ${pass}
+    \    Log  ${is_below_threshold}
+    \    Run Keyword If  ${review_yyyy}==${threshold_yyyy}
+    \    ...    Run Keyword If  ${review_mm}>${threshold_mm}  Set Test Variable  ${is_below_threshold}  ${pass}
+    \    Log  ${is_below_threshold}
+    \    Run Keyword If  ${review_yyyy}==${threshold_yyyy}
+    \    ...    Run Keyword If  ${review_mm}==${threshold_mm}
+    \    ...    Run Keyword If  ${review_dd}>=${threshold_dd}  Set Test Variable  ${is_below_threshold}  ${pass}
+    \    Log  ${is_below_threshold}
+    \
+    \    ${temp} =  Get From List  ${android_review_buffer}  ${date_index}
+    \    Run Keyword If  '${is_below_threshold}'=='${pass}'  Append To List  ${review_list}  ${temp}
+    \    ${author_index} =  Set Variable  ${date_index - 1}
+    \    ${temp} =  Get From List  ${android_review_buffer}  ${author_index}
+    \    Run Keyword If  '${is_below_threshold}'=='${pass}'  Append To List  ${review_list}  ${temp}
+    \    ${spec_index} =  Set Variable  ${date_index + 1}
+    \    ${temp} =  Get From List  ${android_review_buffer}  ${spec_index}
+    \    Run Keyword If  '${is_below_threshold}'=='${pass}'  Append To List  ${review_list}  ${temp}
+    \    ${rating_index} =  Set Variable  ${date_index + 2}
+    \    ${temp} =  Get From List  ${android_review_buffer}  ${rating_index}
+    \    Run Keyword If  '${is_below_threshold}'=='${pass}'  Append To List  ${review_list}  ${temp}
+    \    ${title_index} =  Set Variable  ${date_index + 3}
+    \    ${temp} =  Get From List  ${android_review_buffer}  ${title_index}
+    \    Run Keyword If  '${is_below_threshold}'=='${pass}'  Append To List  ${review_list}  ${temp}
+    \    ${text_index} =  Set Variable  ${date_index + 4}
+    \    ${temp} =  Get From List  ${android_review_buffer}  ${text_index}
+    \    Run Keyword If  '${is_below_threshold}'=='${pass}'  Append To List  ${review_list}  ${temp}
+
+Construct Android Review By Date  [Arguments]  ${threshold_yyyy-mm-dd}
+    ${threshold_yyyy-mm-dd_list} =  Split String  ${threshold_yyyy-mm-dd}  ${hyphen}
+    ${temp} =  Get From List  ${threshold_yyyy-mm-dd_list}  0
+    ${threshold_yyyy} =  Convert To Integer  ${temp}
+    ${temp} =  Get From List  ${threshold_yyyy-mm-dd_list}  1
+    ${threshold_mm} =  Convert To Integer  ${temp}
+    ${temp} =  Get From List  ${threshold_yyyy-mm-dd_list}  2
+    ${threshold_dd} =  Convert To Integer  ${temp}
+    ${android_review_buffer_length} =  Get Length  ${android_review_buffer}
+    : FOR  ${date_index}  IN RANGE  1  ${android_review_buffer_length}  6
+    \    ${review_yyyy-mm-dd} =  Get From List  ${android_review_buffer}  ${date_index}
+    \    ${review_yyyy-mm-dd_list} =  Split String  ${review_yyyy-mm-dd}  ${hyphen}
+    \    ${temp} =  Get From List  ${review_yyyy-mm-dd_list}  0
+    \    ${review_yyyy} =  Convert To Integer  ${temp}
+    \    ${temp} =  Get From List  ${review_yyyy-mm-dd_list}  1
+    \    ${review_mm} =  Convert To Integer  ${temp}
+    \    ${temp} =  Get From List  ${review_yyyy-mm-dd_list}  2
+    \    ${review_dd} =  Convert To Integer  ${temp}
+    \
+    \    ${is_below_threshold} =  Set Variable  ${fail}
+    \    Run Keyword If  ${review_yyyy}>${threshold_yyyy}  Set Test Variable  ${is_below_threshold}  ${pass}
+    \    Log  ${is_below_threshold}
+    \    Run Keyword If  ${review_yyyy}==${threshold_yyyy}
+    \    ...    Run Keyword If  ${review_mm}>${threshold_mm}  Set Test Variable  ${is_below_threshold}  ${pass}
+    \    Log  ${is_below_threshold}
+    \    Run Keyword If  ${review_yyyy}==${threshold_yyyy}
+    \    ...    Run Keyword If  ${review_mm}==${threshold_mm}
+    \    ...    Run Keyword If  ${review_dd}>=${threshold_dd}  Set Test Variable  ${is_below_threshold}  ${pass}
+    \    Log  ${is_below_threshold}
+    \
+    \    ${temp} =  Get From List  ${android_review_buffer}  ${date_index}
+    \    Run Keyword If  '${is_below_threshold}'=='${pass}'  Catenate Android Review Email  ${temp}
+    \    ${author_index} =  Set Variable  ${date_index - 1}
+    \    ${temp} =  Get From List  ${android_review_buffer}  ${author_index}
+    \    Run Keyword If  '${is_below_threshold}'=='${pass}'  Catenate Android Review Email  ${temp}
+    \    ${spec_index} =  Set Variable  ${date_index + 1}
+    \    ${temp} =  Get From List  ${android_review_buffer}  ${spec_index}
+    \    Run Keyword If  '${is_below_threshold}'=='${pass}'  Catenate Android Review Email  ${temp}
+    \    ${rating_index} =  Set Variable  ${date_index + 2}
+    \    ${temp} =  Get From List  ${android_review_buffer}  ${rating_index}
+    \    Run Keyword If  '${is_below_threshold}'=='${pass}'  Catenate Android Review Email  ${temp}
+    \    ${title_index} =  Set Variable  ${date_index + 3}
+    \    ${temp} =  Get From List  ${android_review_buffer}  ${title_index}
+    \    Run Keyword If  '${is_below_threshold}'=='${pass}'  Catenate Android Review Email  ${temp}
+    \    ${text_index} =  Set Variable  ${date_index + 4}
+    \    ${temp} =  Get From List  ${android_review_buffer}  ${text_index}
+    \    Run Keyword If  '${is_below_threshold}'=='${pass}'  Catenate Android Review Email  ${temp}
+    \    Run Keyword If  '${is_below_threshold}'=='${pass}'  Catenate Android Review Email  \n
+
+Catenate Android Review Email  [Arguments]  ${msg}
+    ${msg} =  Catenate  ${android_review_email}  \n  ${msg}
+    Set Suite Variable  ${android_review_email}  ${msg}
+
+
+
+Load Iphone Review Buffer
+    Set Test Variable  ${review_title_done}  ${fail}
+    Set Test Variable  ${review_rating_done}  ${fail}
+    Set Test Variable  ${review_author_done}  ${fail}
+    Set Test Variable  ${review_text_done}  ${fail}
+
+    Set Test Variable  ${is_review_title_flag}  ${fail}
+    Set Test Variable  ${is_review_rating_flag}  ${fail}
+    Set Test Variable  ${is_review_author_flag}  ${fail}
+    Set Test Variable  ${is_review_text_flag}  ${fail}
+
+    Set Test Variable  ${inside_list}  ${fail}
+    Set Test Variable  ${inside_list_item}  ${fail}
+
+    ${page_source} =  Get Source
+    ${string_list} =  Split String  ${page_source}  ${right_arrow}
+    ${string_list_length} =  Get Length  ${string_list}
+    Set Suite Variable  ${source_length}  ${string_list_length / 8}
+    : FOR  ${index}  IN RANGE  ${source_length}  ${string_list_length}
+    \    ${string} =  Get From List  ${string_list}  ${index}
+    \    ${list_start}  ${temp} =  Run Keyword And Ignore Error  Should Contain  ${string}  ${iphone_review_list_start}
+    \    ${list_end}  ${temp} =  Run Keyword And Ignore Error  Should Contain  ${string}  ${iphone_review_list_end}
+    \    ${list_item_start}  ${temp} =  Run Keyword And Ignore Error  Should Contain  ${string}  ${iphone_review_start}
+    \    ${list_item_end}  ${temp} =  Run Keyword And Ignore Error  Should Contain  ${string}  ${iphone_review_end}
+    \
+    \    ${is_review_title}  ${temp} =  Run Keyword And Ignore Error  Should Contain  ${string}  ${iphone_review_title}
+    \    ${is_review_rating}  ${temp} =  Run Keyword And Ignore Error  Should Contain  ${string}  ${iphone_review_rating}
+    \    ${is_review_author}  ${temp} =  Run Keyword And Ignore Error  Should Contain  ${string}  ${iphone_review_author}
+    \    ${is_review_text}  ${temp} =  Run Keyword And Ignore Error  Should Contain  ${string}  ${iphone_review_text}
+    \
+    \    Run Keyword If  '${inside_list}'=='${fail}'  Set Test Variable  ${inside_list}  ${list_start}
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${list_end}'=='${pass}'  Exit For Loop
+    \    Log  ${inside_list}
+    \    Log  ${string}
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${list_item_start}'=='${pass}'  Set Test Variable  ${review_title_done}  ${fail}
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${list_item_start}'=='${pass}'  Set Test Variable  ${review_rating_done}  ${fail}
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${list_item_start}'=='${pass}'  Set Test Variable  ${review_author_done}  ${fail}
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${list_item_start}'=='${pass}'  Set Test Variable  ${review_text_done}  ${fail}
+    \
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${list_item_start}'=='${pass}'  Set Test Variable  ${inside_list_item}  ${pass}
+    \    Run Keyword If  '${inside_list_item}'=='${pass}'
+    \    ...    Run Keyword If  '${list_item_end}'=='${pass}'  Set Test Variable  ${inside_list_item}  ${fail}
+    \    Log  ${inside_list_item}
+    \    Log  ${string}
+    \    Run Keyword If  '${inside_list_item}'=='${pass}'
+    \    ...    Run Keyword If  '${is_review_rating}'=='${pass}'
+    \    ...    Run Keyword If  '${review_title_done}'=='${fail}'  Iphone Append Blank Space
+    \    Run Keyword If  '${inside_list_item}'=='${pass}'
+    \    ...    Run Keyword If  '${is_review_rating}'=='${pass}'
+    \    ...    Run Keyword If  '${review_title_done}'=='${fail}'  Set Test Variable  ${review_title_done}  ${pass}
+    \    Run Keyword If  '${inside_list_item}'=='${pass}'
+    \    ...    Run Keyword If  '${is_review_author}'=='${pass}'
+    \    ...    Run Keyword If  '${review_rating_done}'=='${fail}'  Iphone Append Blank Space
+    \    Run Keyword If  '${inside_list_item}'=='${pass}'
+    \    ...    Run Keyword If  '${is_review_author}'=='${pass}'
+    \    ...    Run Keyword If  '${review_rating_done}'=='${fail}'  Set Test Variable  ${review_rating_done}  ${pass}
+    \
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${inside_list_item}'=='${pass}'
+    \    ...    Run Keyword If  '${is_review_title_flag}'=='${pass}'  Iphone Append Review Title  ${string}
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${inside_list_item}'=='${pass}'
+    \    ...    Run Keyword If  '${is_review_title_flag}'=='${pass}'  Set Test Variable  ${review_title_done}  ${pass}
+    \
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${inside_list_item}'=='${pass}'
+    \    ...    Run Keyword If  '${is_review_rating}'=='${pass}'  Iphone Append Review Rating  ${string}
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${inside_list_item}'=='${pass}'
+    \    ...    Run Keyword If  '${is_review_rating}'=='${pass}'  Set Test Variable  ${review_rating_done}  ${pass}
+    \
+    \    Log  ${is_review_author_flag}
+    \    Log  ${string}
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${is_review_author_flag}'=='${pass}'  Iphone Append Review Author  ${string}
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${is_review_author_flag}'=='${pass}'  Set Test Variable  ${review_author_done}  ${pass}
+    \
+    \    Log  ${is_review_text_flag}
+    \    Log  ${string}
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${is_review_text_flag}'=='${pass}'  Iphone Append Review Text  ${string}
+    \    Run Keyword If  '${inside_list}'=='${pass}'
+    \    ...    Run Keyword If  '${is_review_text_flag}'=='${pass}'  Set Test Variable  ${review_text_done}  ${pass}
+    \
+    \    Set Test Variable  ${is_review_title_flag}  ${fail}
+    \    Set Test Variable  ${is_review_author_flag}  ${fail}
+    \    Set Test Variable  ${is_review_text_flag}  ${fail}
+    \
+    \    Run Keyword If  '${is_review_title}'=='${pass}'  Set Test Variable  ${is_review_title_flag}  ${pass}
+    \    Run Keyword If  '${is_review_author}'=='${pass}'  Set Test Variable  ${is_review_author_flag}  ${pass}
+    \    Run Keyword If  '${is_review_text}'=='${pass}'  Set Test Variable  ${is_review_text_flag}  ${pass}
+
+Iphone Append Review Author  [Arguments]  ${temp}
+    ${temp} =  Fetch From Left  ${temp}  ${left_arrow}
+    Append To List  ${iphone_review_buffer}  ${temp}
+
+Iphone Append Review Rating  [Arguments]  ${temp}
+    ${temp} =  Get Substring  ${temp}  66  73
+    Append To List  ${iphone_review_buffer}  ${temp}
+
+Iphone Append Review Title  [Arguments]  ${temp}
+    ${temp} =  Fetch From Left  ${temp}  ${left_arrow}
+    Append To List  ${iphone_review_buffer}  ${temp}
+
+Iphone Append Review Text  [Arguments]  ${temp}
+    ${temp} =  Fetch From Left  ${temp}  ${left_arrow}
+    Append To List  ${iphone_review_buffer}  ${temp}
+
+Iphone Append Blank Space
+    Append To List  ${iphone_review_buffer}  ${blank}
+
+Construct Iphone Review
+    ${iphone_review_buffer_length} =  Get Length  ${iphone_review_buffer}
+    : FOR  ${title_index}  IN RANGE  0  ${iphone_review_buffer_length}  4
+    \    ${temp} =  Get From List  ${iphone_review_buffer}  ${title_index}
+    \    Catenate Iphone Review Email  ${temp}
+    \    ${rating_index} =  Set Variable  ${title_index + 1}
+    \    ${temp} =  Get From List  ${iphone_review_buffer}  ${rating_index}
+    \    Catenate Iphone Review Email  ${temp}
+    \    ${author_index} =  Set Variable  ${title_index + 2}
+    \    ${temp} =  Get From List  ${iphone_review_buffer}  ${author_index}
+    \    Catenate Iphone Review Email  ${temp}
+    \    ${text_index} =  Set Variable  ${title_index + 3}
+    \    ${temp} =  Get From List  ${iphone_review_buffer}  ${text_index}
+    \    Catenate Iphone Review Email  ${temp}
+    \    Catenate Iphone Review Email  \n
+
+Catenate Iphone Review Email  [Arguments]  ${msg}
+    ${msg} =  Catenate  ${iphone_review_email}  \n  ${msg}
+    Set Suite Variable  ${iphone_review_email}  ${msg}
+
+Check ${item} Exists
+    ${count} =  Convert To Integer  0
+    ${test}  ${result} =  Run Keyword And Ignore Error  Page Should Contain  ${item}
+    ${temp} =  Set Variable  ${count + 1}
+    ${count} =  Set Variable If  '${test}'=='PASS'  ${temp}  ${count}
+    ${test}  ${result} =  Run Keyword And Ignore Error  Page Should Contain Button  ${item}
+    ${temp} =  Set Variable  ${count + 1}
+    ${count} =  Set Variable If  '${test}'=='PASS'  ${temp}  ${count}
+    ${test}  ${result} =  Run Keyword And Ignore Error  Page Should Contain Checkbox  ${item}
+    ${temp} =  Set Variable  ${count + 1}
+    ${count} =  Set Variable If  '${test}'=='PASS'  ${temp}  ${count}
+    ${test}  ${result} =  Run Keyword And Ignore Error  Page Should Contain Element  ${item}
+    ${temp} =  Set Variable  ${count + 1}
+    ${count} =  Set Variable If  '${test}'=='PASS'  ${temp}  ${count}
+    ${test}  ${result} =  Run Keyword And Ignore Error  Page Should Contain Image  ${item}
+    ${temp} =  Set Variable  ${count + 1}
+    ${count} =  Set Variable If  '${test}'=='PASS'  ${temp}  ${count}
+    ${test}  ${result} =  Run Keyword And Ignore Error  Page Should Contain Link  ${item}
+    ${temp} =  Set Variable  ${count + 1}
+    ${count} =  Set Variable If  '${test}'=='PASS'  ${temp}  ${count}
+    ${test}  ${result} =  Run Keyword And Ignore Error  Page Should Contain Radio Button  ${item}
+    ${temp} =  Set Variable  ${count + 1}
+    ${count} =  Set Variable If  '${test}'=='PASS'  ${temp}  ${count}
+    ${test}  ${result} =  Run Keyword And Ignore Error  Page Should Contain Textfield  ${item}
+    ${temp} =  Set Variable  ${count + 1}
+    ${count} =  Set Variable If  '${test}'=='PASS'  ${temp}  ${count}
+    [Return]  ${count}
+
+Set Email Message  [Arguments]  ${msg}
+    Set Suite Variable  ${message}  ${msg}
+
+Set Email Subject  [Arguments]  ${sub}
+    Set Suite Variable  ${subject}  ${sub}
+
+Alert
+    ${temp} =  Catenate  ${message}
+    ${email_text} =  Convert TO String  ${temp}
+    Send Email  ${destination_address}  ${subject}  ${email_text}

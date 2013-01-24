@@ -1,0 +1,149 @@
+*** Settings ***
+Resource  autocompleteVariables.txt
+Resource  myFunctions.txt
+
+*** Keywords ***
+Log In Email ${email} Password ${password}
+    Set Selenium Timeout  ${default_wait_time}
+    Open Browser  ${landing_url}  ${browser}
+    Set Selenium Speed  ${test_speed}
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - Cannot Reach OUR BLOCK Page
+    Set Email Subject  AJC Alert autocomplete
+    ${test} =  Check ${get_the_best_service_text} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Close Browser
+    Run Keyword If  '${test}'=='0'  Fatal Error
+    Input Text  ${get_the_best_service_email}  ${email}
+    Input Text  ${get_the_best_service_Password}  ${password}
+    Click Button  ${get_the_best_service_sign_in}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - Account Login Failed
+    ${test} =  Check ${deals_and_buynow_text} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Close Browser
+    Run Keyword If  '${test}'=='0'  Fatal Error
+
+*** Test Cases ***
+User Log In Successfully And Load Deals And Buy Now
+    Log In Email ${email_address} Password ${password}
+    Get Page Info
+    Sleep  ${micro_sleep}
+    ${count_one} =  Get Text  ${result_count}
+
+Search For Deck Maintenance Near User Location
+    Input Text  ${deals_and_buynow_search_box}  ${search_item_one}
+    Click Button  ${deals_and_buynow_search_button}  don't wait
+    Sleep  ${micro_sleep}
+    ${count_two} =  Get Text  ${result_count}
+
+Empty Result Second Time
+    Input Text  ${deals_and_buynow_search_box}  ${search_item_empty}
+    Click Button  ${deals_and_buynow_search_button}  don't wait
+    Sleep  ${micro_sleep}
+    ${count_three} =  Get Text  ${result_count}
+
+First Result Count Should Be The Same As The Third
+    Set Email Message  Issue - First Result Count Should Be The Same As The Third
+    Run Keyword Unless  '${count_one}'=='${count_three}'  Test Counter Plus Plus
+    Run Keyword Unless  '${count_one}'=='${count_three}'  Alert
+    Run Keyword Unless  '${count_one}'=='${count_three}'  Fail
+
+Search For Deck Near User Location
+    Simulate Key Sequence  ${deals_and_buynow_search_box}  68 69 67 75
+    Sleep  ${short_sleep}
+    Page Should Contain  ${autocomplete_one}
+    Simulate Key Sequence  ${deals_and_buynow_search_box}  32 77 65 73 78 84 69 78 65 78 67 69
+    Click Button  ${deals_and_buynow_search_button}  don't wait
+    Sleep  ${micro_sleep}
+    ${count_four} =  Get Text  ${result_count}
+
+Second Result Count Should Be The Same As The Fourth
+    Set Email Message  Issue - Second Result Count Should Be The Same As The Fourth
+    Run Keyword Unless  '${count_two}'=='${count_four}'  Test Counter Plus Plus
+    Run Keyword Unless  '${count_two}'=='${count_four}'  Alert
+    Run Keyword Unless  '${count_two}'=='${count_four}'  Fail
+
+Empty Result Third Time
+    Input Text  ${deals_and_buynow_search_box}  ${search_item_empty}
+    Click Button  ${deals_and_buynow_search_button}  don't wait
+    Sleep  ${micro_sleep}
+    ${count_one} =  Get Text  ${result_count}
+
+Search For Carpet Cleaning Near User Location
+    Input Text  ${deals_and_buynow_search_box}  ${search_item_three}
+    Click Button  ${deals_and_buynow_search_button}  don't wait
+    Sleep  ${micro_sleep}
+    ${count_two} =  Get Text  ${result_count}
+
+Empty Result Fourth Time
+    Input Text  ${deals_and_buynow_search_box}  ${search_item_empty}
+    Click Button  ${deals_and_buynow_search_button}  don't wait
+    Sleep  ${micro_sleep}
+    ${count_three} =  Get Text  ${result_count}
+
+First Result Count Should Be The Same As The Third Again
+    Set Email Message  Issue - First Result Count Should Be The Same As The Third Again
+    Run Keyword Unless  '${count_one}'=='${count_three}'  Test Counter Plus Plus
+    Run Keyword Unless  '${count_one}'=='${count_three}'  Alert
+    Run Keyword Unless  '${count_one}'=='${count_three}'  Fail
+
+Search For Carpe Near User Location
+    Simulate Key Sequence  ${deals_and_buynow_search_box}  67 65 82 80 69 84
+    Sleep  ${short_sleep}
+    Page Should Contain  ${autocomplete_three}
+    Simulate Key Sequence  ${deals_and_buynow_search_box}  32 67 76 69 65 78 73 78 71
+    Click Button  ${deals_and_buynow_search_button}  don't wait
+    Sleep  ${micro_sleep}
+    ${count_four} =  Get Text  ${result_count}
+
+Second Result Count Should Be The Same As The Fourth Again
+    Set Email Message  Issue - Second Result Count Should Be The Same As The Fourth Again
+    Run Keyword Unless  '${count_two}'=='${count_four}'  Test Counter Plus Plus
+    Run Keyword Unless  '${count_two}'=='${count_four}'  Alert
+    Run Keyword Unless  '${count_two}'=='${count_four}'  Fail
+
+Empty Result fifth Time
+    Input Text  ${deals_and_buynow_search_box}  ${search_item_empty}
+    Click Button  ${deals_and_buynow_search_button}  don't wait
+    Sleep  ${micro_sleep}
+    ${count_one} =  Get Text  ${result_count}
+
+Search For Auto Service Near User Location
+    Input Text  ${deals_and_buynow_search_box}  ${search_item_five}
+    Click Button  ${deals_and_buynow_search_button}  don't wait
+    Sleep  ${micro_sleep}
+    ${count_two} =  Get Text  ${result_count}
+
+Empty Result sixth Time
+    Input Text  ${deals_and_buynow_search_box}  ${search_item_empty}
+    Click Button  ${deals_and_buynow_search_button}  don't wait
+    Sleep  ${micro_sleep}
+    ${count_three} =  Get Text  ${result_count}
+
+First Result Count Should Be The Same As The Third Yet Again
+    Set Email Message  Issue - First Result Count Should Be The Same As The Third Yet Again
+    Run Keyword Unless  '${count_one}'=='${count_three}'  Test Counter Plus Plus
+    Run Keyword Unless  '${count_one}'=='${count_three}'  Alert
+    Run Keyword Unless  '${count_one}'=='${count_three}'  Fail
+
+Search For Auto Near User Location
+    Simulate Key Sequence  ${deals_and_buynow_search_box}  65 85 84 79
+    Sleep  ${short_sleep}
+    Page Should Contain  ${autocomplete_five}
+    Simulate Key Sequence  ${deals_and_buynow_search_box}  32 83 69 82 86 73 67 69
+    Click Button  ${deals_and_buynow_search_button}  don't wait
+    Sleep  ${micro_sleep}
+    ${count_four} =  Get Text  ${result_count}
+
+Second Result Count Should Be The Same As The Fourth Yet Again
+    Set Email Message  Issue - Second Result Count Should Be The Same As The Fourth Yet Again
+    Run Keyword Unless  '${count_two}'=='${count_four}'  Test Counter Plus Plus
+    Run Keyword Unless  '${count_two}'=='${count_four}'  Alert
+    Run Keyword Unless  '${count_two}'=='${count_four}'  Fail
+
+Send Test Summary
+    ${temp} =  Catenate  Test completed with  ${test_counter}  out of 6 failures!
+    Set Email Message  ${temp}
+    Set Email Subject  AJC Summary autocomplete
+    Alert
+    Close Browser
+    Log  ${page_info}

@@ -1,0 +1,54 @@
+*** Settings ***
+Resource  reviewEmailVariables.txt
+
+*** Variables ***
+${date_threshold}  2013-01-01
+
+*** Test Cases ***
+Google Play Angie's List Mobile Reached
+    Set Selenium Timeout  ${default_wait_time}
+    Open Browser  ${angieslist_android_url}  ${browser}
+    Set Selenium Speed  ${test_speed}
+    Wait Until Page Loaded  ${default_wait_time}
+
+Expand User Review And Go Back to first page
+    Click Link  ${angieslist_android_read_all_user_reviews}  don't wait
+    Last Android Review Page
+    : FOR  ${index}  IN RANGE  ${last_page}  -1  -1
+    \    ${temp} =  Catenate  SEPARATOR=  ${android_review_page_id}  ${index}
+    \    Click Element  ${temp}  don't wait
+    \    Sleep  ${short_sleep}
+    Last Android Review Page
+
+Pull Android User Review
+    Load Android Review Buffer
+    Construct Android Review By Date  ${date_threshold}
+
+Send Android Review Email
+    Set Email Message  ${android_review_email}
+    Set Email Subject  AJC Android reviewEmail
+    Alert
+
+Iphone Angie's List Mobile Reached
+    : FOR  ${index}  IN RANGE  0  10
+    \    Go To  ${angieslist_iphone_url}
+    \    Wait Until Page Loaded  ${default_wait_time}
+    \    ${temp} =  Check ${angieslist_iphone_text} Exists
+    \    Run Keyword Unless  '${temp}'=='0'  Exit For Loop
+    \    Sleep  ${long_sleep}
+    Set Email Message  Issue - Cannot Reach Iphone Angie's List Mobile Page
+    Set Email Subject  AJC Alert reviewEmail
+    Run Keyword If  '${temp}'=='${fail}'  Alert
+    Run Keyword If  '${temp}'=='${fail}'  Close Browser
+    Run Keyword If  '${temp}'=='${fail}'  Fatal Error
+
+Pull Iphone User Review
+    Load Iphone Review Buffer
+    Log  ${iphone_review_buffer}
+    Construct Iphone Review
+    Log  ${iphone_review_email}
+
+Send Iphone Review Email
+    Set Email Message  ${iphone_review_email}
+    Set Email Subject  AJC Iphone reviewEmail
+    Alert

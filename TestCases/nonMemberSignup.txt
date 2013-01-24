@@ -1,0 +1,497 @@
+*** Settings ***
+Resource  nonMemberSignupVariables.txt
+Resource  myFunctions.txt
+
+*** Test Cases ***
+Clear Account If Previously Created
+    ${filter} =  Catenate  first_name  is  ${first_name}  and  last_name  is  ${last_name}
+    ${sql_string} =  Delete From ${website_alusercache} Where ${filter}
+    Execute Sql String ${sql_string} On ${alshare}
+
+Open Browser And Accept Invite
+    Set Selenium Timeout  ${default_wait_time}
+    Open Browser  ${invite_url}  ${browser}
+    Set Selenium Speed  ${test_speed}
+    Random Gmail
+
+Successfully Reach OUR BLOCK Page
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - Successfully Reach OUR BLOCK Page
+    Set Email Subject  AJC Alert nonMemberSignup
+    ${test} =  Check ${our_block_text} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Close Browser
+    Run Keyword If  '${test}'=='0'  Fatal Error
+
+Error When All Info Missing
+    Click Button  ${our_block_create_your_account}  don't wait
+    Set Email Message  Issue - Error When All Info Missing
+    ${test} =  Check ${our_block_error_image} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+    Reload Page
+
+Error When First Name Missing
+    Wait Until Page Loaded  ${default_wait_time}
+    Input Text  ${our_block_last_name}  ${last_name}
+    Input Text  ${our_block_address1}  ${address1}
+    Input Text  ${our_block_address2}  ${address2}
+    Input Text  ${our_block_city}  ${city}
+    Select From List  ${our_block_state}  ${state}
+    Input Text  ${our_block_zip_code}  ${zip_code}
+    Input Text  ${our_block_email_address}  ${random_gmail}
+    Input Text  ${our_block_password}  ${password}
+    Input Text  ${our_block_password_verify}  ${password}
+    Click Button  ${our_block_create_your_account}  don't wait
+    Set Email Message  Issue - Error When First Name Missing
+    ${test} =  Check ${our_block_error_image} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+    Reload Page
+
+Error When Last Name Missing
+    Wait Until Page Loaded  ${default_wait_time}
+    Input Text  ${our_block_first_name}  ${first_name}
+    Input Text  ${our_block_address1}  ${address1}
+    Input Text  ${our_block_address2}  ${address2}
+    Input Text  ${our_block_city}  ${city}
+    Select From List  ${our_block_state}  ${state}
+    Input Text  ${our_block_zip_code}  ${zip_code}
+    Input Text  ${our_block_email_address}  ${random_gmail}
+    Input Text  ${our_block_password}  ${password}
+    Input Text  ${our_block_password_verify}  ${password}
+    Click Button  ${our_block_create_your_account}  don't wait
+    Set Email Message  Issue - Error When Last Name Missing
+    ${test} =  Check ${our_block_error_image} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+    Reload Page
+
+Error When Address Missing
+    Wait Until Page Loaded  ${default_wait_time}
+    Input Text  ${our_block_first_name}  ${first_name}
+    Input Text  ${our_block_last_name}  ${last_name}
+    Input Text  ${our_block_city}  ${city}
+    Select From List  ${our_block_state}  ${state}
+    Input Text  ${our_block_zip_code}  ${zip_code}
+    Input Text  ${our_block_email_address}  ${random_gmail}
+    Input Text  ${our_block_password}  ${password}
+    Input Text  ${our_block_password_verify}  ${password}
+    Click Button  ${our_block_create_your_account}  don't wait
+    Set Email Message  Issue - Error When Address Missing
+    ${test} =  Check ${our_block_error_image} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+    Reload Page
+
+Error When City Missing
+    Wait Until Page Loaded  ${default_wait_time}
+    Input Text  ${our_block_first_name}  ${first_name}
+    Input Text  ${our_block_last_name}  ${last_name}
+    Input Text  ${our_block_address1}  ${address1}
+    Input Text  ${our_block_address2}  ${address2}
+    Select From List  ${our_block_state}  ${state}
+    Input Text  ${our_block_zip_code}  ${zip_code}
+    Input Text  ${our_block_email_address}  ${random_gmail}
+    Input Text  ${our_block_password}  ${password}
+    Input Text  ${our_block_password_verify}  ${password}
+    Click Button  ${our_block_create_your_account}  don't wait
+    Set Email Message  Issue - Error When City Missing
+    ${test} =  Check ${our_block_error_image} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+    Reload Page
+
+Error When State Missing
+    Wait Until Page Loaded  ${default_wait_time}
+    Input Text  ${our_block_first_name}  ${first_name}
+    Input Text  ${our_block_last_name}  ${last_name}
+    Input Text  ${our_block_address1}  ${address1}
+    Input Text  ${our_block_address2}  ${address2}
+    Input Text  ${our_block_city}  ${city}
+    Input Text  ${our_block_zip_code}  ${zip_code}
+    Input Text  ${our_block_email_address}  ${random_gmail}
+    Input Text  ${our_block_password}  ${password}
+    Input Text  ${our_block_password_verify}  ${password}
+    Click Button  ${our_block_create_your_account}  don't wait
+    Set Email Message  Issue - Error When State Missing
+    ${test} =  Check ${our_block_error_image} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+    Reload Page
+
+Error When Zip Code Missing
+    Wait Until Page Loaded  ${default_wait_time}
+    Input Text  ${our_block_first_name}  ${first_name}
+    Input Text  ${our_block_last_name}  ${last_name}
+    Input Text  ${our_block_address1}  ${address1}
+    Input Text  ${our_block_address2}  ${address2}
+    Input Text  ${our_block_city}  ${city}
+    Select From List  ${our_block_state}  ${state}
+    Input Text  ${our_block_email_address}  ${random_gmail}
+    Input Text  ${our_block_password}  ${password}
+    Input Text  ${our_block_password_verify}  ${password}
+    Click Button  ${our_block_create_your_account}  don't wait
+    Set Email Message  Issue - Error When Zip Code Missing
+    ${test} =  Check ${our_block_error_image} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+    Reload Page
+
+Error When Zip Code Too Short
+    Wait Until Page Loaded  ${default_wait_time}
+    Input Text  ${our_block_first_name}  ${first_name}
+    Input Text  ${our_block_last_name}  ${last_name}
+    Input Text  ${our_block_address1}  ${address1}
+    Input Text  ${our_block_address2}  ${address2}
+    Input Text  ${our_block_city}  ${city}
+    Select From List  ${our_block_state}  ${state}
+    Input Text  ${our_block_zip_code}  6666
+    Input Text  ${our_block_email_address}  ${random_gmail}
+    Input Text  ${our_block_password}  ${password}
+    Input Text  ${our_block_password_verify}  ${password}
+    Click Button  ${our_block_create_your_account}  don't wait
+    Sleep  ${micro_sleep}
+    Set Email Message  Issue - Error When Zip Code Too Short
+    ${test} =  Check ${our_block_error_message} Visible And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+    Reload Page
+
+Error When Zip Code Too Long
+    Wait Until Page Loaded  ${default_wait_time}
+    Input Text  ${our_block_first_name}  ${first_name}
+    Input Text  ${our_block_last_name}  ${last_name}
+    Input Text  ${our_block_address1}  ${address1}
+    Input Text  ${our_block_address2}  ${address2}
+    Input Text  ${our_block_city}  ${city}
+    Select From List  ${our_block_state}  ${state}
+    Input Text  ${our_block_zip_code}  666666666
+    Input Text  ${our_block_email_address}  ${random_gmail}
+    Input Text  ${our_block_password}  ${password}
+    Input Text  ${our_block_password_verify}  ${password}
+    Click Button  ${our_block_create_your_account}  don't wait
+    Sleep  ${micro_sleep}
+    Set Email Message  Issue - Error When Zip Code Too Long
+    ${test} =  Check ${our_block_error_message} Visible And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+    Reload Page
+
+Error When Zip Code Forbidden Character
+    Wait Until Page Loaded  ${default_wait_time}
+    Input Text  ${our_block_first_name}  ${first_name}
+    Input Text  ${our_block_last_name}  ${last_name}
+    Input Text  ${our_block_address1}  ${address1}
+    Input Text  ${our_block_address2}  ${address2}
+    Input Text  ${our_block_city}  ${city}
+    Select From List  ${our_block_state}  ${state}
+    Input Text  ${our_block_zip_code}  6^_^6
+    Input Text  ${our_block_email_address}  ${random_gmail}
+    Input Text  ${our_block_password}  ${password}
+    Input Text  ${our_block_password_verify}  ${password}
+    Click Button  ${our_block_create_your_account}  don't wait
+    Sleep  ${micro_sleep}
+    Set Email Message  Issue - Error When Zip Code Forbidden Character
+    ${test} =  Check ${our_block_error_message} Visible And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+    Reload Page
+
+Error When Email Missing
+    Wait Until Page Loaded  ${default_wait_time}
+    Input Text  ${our_block_first_name}  ${first_name}
+    Input Text  ${our_block_last_name}  ${last_name}
+    Input Text  ${our_block_address1}  ${address1}
+    Input Text  ${our_block_address2}  ${address2}
+    Input Text  ${our_block_city}  ${city}
+    Select From List  ${our_block_state}  ${state}
+    Input Text  ${our_block_zip_code}  ${zip_code}
+    Input Text  ${our_block_password}  ${password}
+    Input Text  ${our_block_password_verify}  ${password}
+    Click Button  ${our_block_create_your_account}  don't wait
+    Set Email Message  Issue - Error When Email Missing
+    ${test} =  Check ${our_block_error_image} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+    Reload Page
+
+Error When Email Invalid
+    Wait Until Page Loaded  ${default_wait_time}
+    Input Text  ${our_block_first_name}  ${first_name}
+    Input Text  ${our_block_last_name}  ${last_name}
+    Input Text  ${our_block_address1}  ${address1}
+    Input Text  ${our_block_address2}  ${address2}
+    Input Text  ${our_block_city}  ${city}
+    Select From List  ${our_block_state}  ${state}
+    Input Text  ${our_block_zip_code}  ${zip_code}
+    Input Text  ${our_block_email_address}  ajctestfriendgmail.com
+    Input Text  ${our_block_password}  ${password}
+    Input Text  ${our_block_password_verify}  ${password}
+    Click Button  ${our_block_create_your_account}  don't wait
+    Set Email Message  Issue - Error When Email Invalid
+    ${test} =  Check ${our_block_error_image} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+    Reload Page
+
+Error When Password Missing
+    Wait Until Page Loaded  ${default_wait_time}
+    Input Text  ${our_block_first_name}  ${first_name}
+    Input Text  ${our_block_last_name}  ${last_name}
+    Input Text  ${our_block_address1}  ${address1}
+    Input Text  ${our_block_address2}  ${address2}
+    Input Text  ${our_block_city}  ${city}
+    Select From List  ${our_block_state}  ${state}
+    Input Text  ${our_block_zip_code}  ${zip_code}
+    Input Text  ${our_block_email_address}  ${random_gmail}
+    Input Text  ${our_block_password_verify}  ${password}
+    Click Button  ${our_block_create_your_account}  don't wait
+    Set Email Message  Issue - Error When Password Missing
+    ${test} =  Check ${our_block_error_image} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+    Reload Page
+
+Error When Password Verify Missing
+    Wait Until Page Loaded  ${default_wait_time}
+    Input Text  ${our_block_first_name}  ${first_name}
+    Input Text  ${our_block_last_name}  ${last_name}
+    Input Text  ${our_block_address1}  ${address1}
+    Input Text  ${our_block_address2}  ${address2}
+    Input Text  ${our_block_city}  ${city}
+    Select From List  ${our_block_state}  ${state}
+    Input Text  ${our_block_zip_code}  ${zip_code}
+    Input Text  ${our_block_email_address}  ${random_gmail}
+    Input Text  ${our_block_password}  ${password}
+    Click Button  ${our_block_create_your_account}  don't wait
+    Set Email Message  Issue - Error When Password Verify Missing
+    ${test} =  Check ${our_block_error_image} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+    Reload Page
+
+Error When Password Different
+    Wait Until Page Loaded  ${default_wait_time}
+    Input Text  ${our_block_first_name}  ${first_name}
+    Input Text  ${our_block_last_name}  ${last_name}
+    Input Text  ${our_block_address1}  ${address1}
+    Input Text  ${our_block_address2}  ${address2}
+    Input Text  ${our_block_city}  ${city}
+    Select From List  ${our_block_state}  ${state}
+    Input Text  ${our_block_zip_code}  ${zip_code}
+    Input Text  ${our_block_email_address}  ${random_gmail}
+    Input Text  ${our_block_password}  ${password}
+    Input Text  ${our_block_password_verify}  87654321
+    Click Button  ${our_block_create_your_account}  don't wait
+    Set Email Message  Issue - Error When Password Different
+    ${test} =  Check ${our_block_error_image} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+    Reload Page
+
+Error When Password Too Short
+    Wait Until Page Loaded  ${default_wait_time}
+    Input Text  ${our_block_first_name}  ${first_name}
+    Input Text  ${our_block_last_name}  ${last_name}
+    Input Text  ${our_block_address1}  ${address1}
+    Input Text  ${our_block_address2}  ${address2}
+    Input Text  ${our_block_city}  ${city}
+    Select From List  ${our_block_state}  ${state}
+    Input Text  ${our_block_zip_code}  ${zip_code}
+    Input Text  ${our_block_email_address}  ${random_gmail}
+    Input Text  ${our_block_password}  123
+    Input Text  ${our_block_password_verify}  123
+    Click Button  ${our_block_create_your_account}  don't wait
+    Set Email Message  Issue - Error When Password Too Short
+    ${test} =  Check ${our_block_error_image} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+    Reload Page
+
+Error When Password Too Long
+    Wait Until Page Loaded  ${default_wait_time}
+    Input Text  ${our_block_first_name}  ${first_name}
+    Input Text  ${our_block_last_name}  ${last_name}
+    Input Text  ${our_block_address1}  ${address1}
+    Input Text  ${our_block_address2}  ${address2}
+    Input Text  ${our_block_city}  ${city}
+    Select From List  ${our_block_state}  ${state}
+    Input Text  ${our_block_zip_code}  ${zip_code}
+    Input Text  ${our_block_email_address}  ${random_gmail}
+    Input Text  ${our_block_password}  1234567890abcdefghij
+    Input Text  ${our_block_password_verify}  1234567890abcdefghij
+    Click Button  ${our_block_create_your_account}  don't wait
+    Set Email Message  Issue - Error When Password Too Long
+    ${test} =  Check ${our_block_error_image} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+    Reload Page
+
+Enter All Correct Details And Proceed
+    Wait Until Page Loaded  ${default_wait_time}
+    Input Text  ${our_block_first_name}  ${first_name}
+    Input Text  ${our_block_last_name}  ${last_name}
+    Input Text  ${our_block_address1}  ${address1}
+    Input Text  ${our_block_address2}  ${address2}
+    Input Text  ${our_block_city}  ${city}
+    Select From List  ${our_block_state}  ${state}
+    Input Text  ${our_block_zip_code}  ${zip_code}
+    Input Text  ${our_block_email_address}  ${random_gmail}
+    Input Text  ${our_block_password}  ${password}
+    Input Text  ${our_block_password_verify}  ${password}
+    Click Button  ${our_block_create_your_account}  don't wait
+
+Able To Reach ONLINE SAFETY PAGE From OUR BLOCK
+    Sleep  ${long_sleep}
+    Set Email Message  Issue - Able To Reach ONLINE SAFETY PAGE From OUR BLOCK
+    ${test} =  Check ${online_safety_text} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Close Browser
+    Run Keyword If  '${test}'=='0'  Fatal Error
+
+Connect To Database And Check If Account Created
+    ${filter} =  Catenate  first_name  is  ${first_name}  and  last_name  is  ${last_name}
+    ${sql_string} =  Select ${all} From ${website_alusercache} Where ${filter}
+    Set Email Message  Issue - Connect To Database And Check If Account Created
+    ${test} =  Check ${sql_string} Is In ${alshare} And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Close Browser
+    Run Keyword If  '${test}'=='0'  Fatal Error
+
+Error When Expires Missing
+    Input Text  ${online_safety_card_number}  ${card_number}
+    Input Text  ${online_safety_ccv}  ${ccv}
+    Click Button  ${online_safety_verify_by_credit_card}  don't wait
+    Sleep  ${micro_sleep}
+    Set Email Message  Issue - Error When Expires Missing
+    ${test} =  Check ${our_block_error_image} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+Error When All Credit Info Missing
+    Input Text  ${online_safety_card_number}  ${empty}
+    Input Text  ${online_safety_ccv}  ${empty}
+    Click Button  ${online_safety_verify_by_credit_card}  don't wait
+    Sleep  ${micro_sleep}
+    Set Email Message  Issue - Error When All Credit Info Missing
+    ${test} =  Check ${our_block_error_image} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+Error When Card Number Missing
+    Input Text  ${online_safety_card_number}  ${empty}
+    Select From List  ${online_safety_expires_month}  ${expires_month}
+    Select From List  ${online_safety_expires_year}  ${expires_year}
+    Input Text  ${online_safety_ccv}  ${ccv}
+    Click Button  ${online_safety_verify_by_credit_card}  don't wait
+    Sleep  ${micro_sleep}
+    Set Email Message  Issue - Error When Card Number Missing
+    ${test} =  Check ${our_block_error_image} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+Error When Card Number Too Short
+    Input Text  ${online_safety_card_number}  4
+    Select From List  ${online_safety_expires_month}  ${expires_month}
+    Select From List  ${online_safety_expires_year}  ${expires_year}
+    Input Text  ${online_safety_ccv}  ${ccv}
+    Click Button  ${online_safety_verify_by_credit_card}  don't wait
+    Sleep  ${micro_sleep}
+    Set Email Message  Issue - Error When Card Number Too Short
+    ${test} =  Check ${our_block_error_image} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+Error When Card Number Too Long
+    Input Text  ${online_safety_card_number}  41111111111111111
+    Select From List  ${online_safety_expires_month}  ${expires_month}
+    Select From List  ${online_safety_expires_year}  ${expires_year}
+    Input Text  ${online_safety_ccv}  ${ccv}
+    Click Button  ${online_safety_verify_by_credit_card}  don't wait
+    Sleep  ${micro_sleep}
+    Set Email Message  Issue - Error When Card Number Too Long
+    ${test} =  Check ${our_block_error_image} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+Error When Ccv Missing
+    Input Text  ${online_safety_card_number}  ${card_number}
+    Select From List  ${online_safety_expires_month}  ${expires_month}
+    Select From List  ${online_safety_expires_year}  ${expires_year}
+    Input Text  ${online_safety_ccv}  ${empty}
+    Click Button  ${online_safety_verify_by_credit_card}  don't wait
+    Sleep  ${micro_sleep}
+    Set Email Message  Issue - Error When Ccv Missing
+    ${test} =  Check ${our_block_error_image} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+Error When Ccv Too Short
+    Input Text  ${online_safety_card_number}  ${card_number}
+    Select From List  ${online_safety_expires_month}  ${expires_month}
+    Select From List  ${online_safety_expires_year}  ${expires_year}
+    Input Text  ${online_safety_ccv}  1
+    Click Button  ${online_safety_verify_by_credit_card}  don't wait
+    Sleep  ${micro_sleep}
+    Set Email Message  Issue - Error When Ccv Too Short
+    ${test} =  Check ${our_block_error_image} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+Error When Ccv Too Long
+    Input Text  ${online_safety_card_number}  ${card_number}
+    Select From List  ${online_safety_expires_month}  ${expires_month}
+    Select From List  ${online_safety_expires_year}  ${expires_year}
+    Input Text  ${online_safety_ccv}  11111
+    Click Button  ${online_safety_verify_by_credit_card}  don't wait
+    Sleep  ${micro_sleep}
+    Set Email Message  Issue - Error When Ccv Too Long
+    ${test} =  Check ${our_block_error_image} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+Able To Reach Success From ONLINE SAFETY PAGE
+    Input Text  ${online_safety_card_number}  ${card_number}
+    Select From List  ${online_safety_expires_month}  ${expires_month}
+    Select From List  ${online_safety_expires_year}  ${expires_year}
+    Input Text  ${online_safety_ccv}  ${ccv}
+    Click Button  ${online_safety_verify_by_credit_card}  don't wait
+    Sleep  ${short_sleep}
+    Set Email Message  Issue - Able To Reach Success From ONLINE SAFETY PAGE
+    ${test} =  Check ${success_text} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Close Browser
+    Run Keyword If  '${test}'=='0'  Fatal Error
+
+Check The Credit Card Data Has Changed
+    ${filter} =  Catenate  first_name  is  ${first_name}  and  last_name  is  ${last_name}  and  creditCardVerifiedStatus  is  ${not_null}  and  creditCardVerifiedDate  is  ${not_null}
+    ${sql_string} =  Select ${all} From ${website_alusercache} Where ${filter}
+    Set Email Message  Issue - Check The Credit Card Data Has Changed
+    ${test} =  Check ${sql_string} Is In ${alshare} And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Close Browser
+    Run Keyword If  '${test}'=='0'  Fatal Error
+
+Able To Reach Done From Success
+    Click Button  ${success_next}  don't wait
+    Sleep  ${short_sleep}
+    Set Email Message  Issue - Able To Reach Done From Success
+    ${test} =  Check ${done_text} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Close Browser
+    Run Keyword If  '${test}'=='0'  Fatal Error
+
+User Taken To Account
+    Click Button  ${start_using_our_block}
+    Wait Until Page Loaded  ${default_wait_time}
+    Get Page Info
+    Set Email Message  Issue - User Taken To Account
+    ${test} =  Check ${members_account_text} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Close Browser
+    Run Keyword If  '${test}'=='0'  Fatal Error
+
+Delete Account Send Test Summary And Close Browser
+    ${filter} =  Catenate  first_name  is  ${first_name}  and  last_name  is  ${last_name}
+    ${sql_string} =  Delete From ${website_alusercache} Where ${filter}
+    Execute Sql String ${sql_string} On ${alshare}
+    ${temp} =  Catenate  Test completed with  ${test_counter}  out of 25 failures!
+    Set Email Message  ${temp}
+    Set Email Subject  AJC Summary nonMemberSignup
+    Alert
+    Close Browser
+    Log  ${page_info}

@@ -1,0 +1,110 @@
+*** Settings ***
+Documentation  This is your first test
+Resource  inviteaFriendEmailVariables.txt
+Resource  myFunctions.txt
+
+*** Test Cases ***
+Open Browser
+    Set Selenium Timeout  ${default_wait_time}
+    Open Browser  ${invite_url}  ${browser}
+    Set Selenium Speed  ${test_speed}
+
+Successfully Reach OUR BLOCK Page
+    Wait Until Page Loaded  ${default_wait_time}
+    Page Should Contain  ${our_block_text}
+
+Successfully Reach Get The Best Service Page
+    Click Image  ${login_here_image}
+    Wait Until Page Loaded  ${default_wait_time}
+    Page Should Contain  ${get_the_best_service_text}
+
+Log In Successful
+    Input Text  ${get_the_best_service_email}  ${email_address}
+    Input Text  ${get_the_best_service_Password}  ${password}
+    Click Button  ${get_the_best_service_sign_in}
+    Wait Until Page Loaded  ${default_wait_time}
+    Page Should Contain  ${account_text}
+
+Light Box Shows After Clicking Invite Button
+    Click Element  ${account_invite_a_neighbor_to_our_block}  don't wait
+    Element Should Be Visible  ${invite_your_neighbors_light_box}
+
+Error When Email Missing
+    Input Text  ${invite_your_neighbors_first_name}  ${friend_first_name}
+    Input Text  ${invite_your_neighbors_last_name}  ${friend_last_name}
+    Input Text  ${invite_your_neighbors_email}  ${empty}
+    Click Button  ${invite_your_neighbors_send_invite}  don't wait
+    Element Should Be Visible  ${invite_your_neighbors_please_enter_a_valid_email_address}
+
+Error When Email Missing Commercial At Sign
+    Input Text  ${invite_your_neighbors_first_name}  ${friend_first_name}
+    Input Text  ${invite_your_neighbors_last_name}  ${friend_last_name}
+    Input Text  ${invite_your_neighbors_email}  ajctestfriendgmail.com
+    Click Button  ${invite_your_neighbors_send_invite}  don't wait
+    Element Should Be Visible  ${invite_your_neighbors_please_enter_a_valid_email_address}
+
+Error When Email Missing Dot
+    Input Text  ${invite_your_neighbors_first_name}  ${friend_first_name}
+    Input Text  ${invite_your_neighbors_last_name}  ${friend_last_name}
+    Input Text  ${invite_your_neighbors_email}  ajctestfriend@gmailcom
+    Click Button  ${invite_your_neighbors_send_invite}  don't wait
+    Element Should Be Visible  ${invite_your_neighbors_please_enter_a_valid_email_address}
+
+Error When Email Contains Invalid Characters
+    Input Text  ${invite_your_neighbors_first_name}  ${friend_first_name}
+    Input Text  ${invite_your_neighbors_last_name}  ${friend_last_name}
+    Input Text  ${invite_your_neighbors_email}  ajc%estfrie&d@gmail.c#m
+    Click Button  ${invite_your_neighbors_send_invite}  don't wait
+    Element Should Be Visible  ${invite_your_neighbors_please_enter_a_valid_email_address}
+
+Error When First Name Missing
+    Input Text  ${invite_your_neighbors_first_name}  ${empty}
+    Input Text  ${invite_your_neighbors_last_name}  ${friend_last_name}
+    Input Text  ${invite_your_neighbors_email}  ${friend_email}
+    Click Button  ${invite_your_neighbors_send_invite}  don't wait
+    Element Should Be Visible  ${invite_your_neighbors_please_enter_at_least_one_recipient}
+
+Error When Last Name Missing
+    Input Text  ${invite_your_neighbors_first_name}  ${friend_first_name}
+    Input Text  ${invite_your_neighbors_last_name}  ${empty}
+    Input Text  ${invite_your_neighbors_email}  ${friend_email}
+    Click Button  ${invite_your_neighbors_send_invite}  don't wait
+    Element Should Be Visible  ${invite_your_neighbors_please_enter_at_least_one_recipient}
+
+Light Box Disappears Email Sent Successfully
+    Input Text  ${invite_your_neighbors_first_name}  ${friend_first_name}
+    Input Text  ${invite_your_neighbors_last_name}  ${friend_last_name}
+    Input Text  ${invite_your_neighbors_email}  ${friend_email}
+    Click Button  ${invite_your_neighbors_send_invite}  don't wait
+    Sleep  ${lightbox_wait_time}
+    Element Should Not Be Visible  ${invite_your_neighbors_light_box}
+
+Check Invite Log
+    Connect To Database  ${database_api_module_name}  ${database_name}  ${database_user_name}  ${database_password}  ${database_host}  ${database_port}
+    ${db_email} =  Catenate  SEPARATOR=  <  ${friend_email}  >
+    ${db_email} =  Catenate  ${friend_first_name}  ${friend_last_name}  ${db_email}
+    ${db_email} =  Catenate  SEPARATOR=  '  ${db_email}  '
+    ${sql_string} =  Catenate  select id from  ${database_table_name}  where recipient =  ${db_email}
+    Check If Exists In Database  ${sql_string}
+
+Sign Out And Login Hotmail
+    Click Link  ${account_sign_out}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Go To  ${hotmail_url}
+    Wait Until Page Loaded  ${default_wait_time}
+    Page Should Contain Image  ${hotmail_image}
+    Input Text  ${hotmail_username}  ${friend_email}
+    Input Text  ${hotmail_password}  ${friend_password}
+    Click Button  ${hotmail_sign_in}  don't wait
+
+Locate And Verify Reception Of Invite Email
+    Sleep  ${hotmail_wait_time}
+    Page Should Contain  ${account_name}
+    Input Text  ${search_email_box}  ${invite_email_title}    
+    Click Button  ${bing_button}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Click Image  ${read_icon}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Click Link  ${invite_email_delete}  don't wait
+    Click Link  ${sign_out}  don't wait
+    Close Browser

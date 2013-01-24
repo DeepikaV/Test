@@ -1,0 +1,115 @@
+*** Settings ***
+Documentation  Resource file for postAndResponse.txt
+Library  SeleniumLibrary
+Library  DatabaseLibrary
+
+*** Variables ***
+${browser}  firefox
+${default_wait_time}  3000
+${test_speed}  1
+${short_sleep}  30
+${micro_sleep}  15
+${landing_url}  http://qa9myangieslist.angieslist.com
+
+${email_address}  Patworthington@550college.com
+${password}  550College
+@{Select_address}  940 Addison Ave,  , Palo Alto...
+
+${get_the_best_service_email}  UserNameTextbox
+${get_the_best_service_Password}  UserPasswordTextbox
+${get_the_best_service_sign_in}  ctl00$ContentPlaceHolderMainContent$LoginControl$LoginButton
+${get_the_best_service_text}  Find detailed reviews on roofers, plumbers, house cleaners, dentists and more!
+
+${Guided_Search_Landing_Page}  Popular Deals in Your Area
+
+${Search_the_List_tab}   breadCrumbLinks_ctl00_NodeLink
+
+${Electrical_link}  Electrical
+${Electrical_text}  "Electrical" near
+
+${Handymen_link}  Handymen
+${Handymen_text}  "Handymen" near
+
+${Heating_and_AC_link}   Heating & A/C
+${Heating_and_AC_text}    "Heating & A/C" near
+
+${Housecleaning_link}   Housecleaning
+${Housecleaning_text}   "Housecleaning" near
+
+${Painting_Exterior_link}    Painting - Exterior
+${Painting_Exterior_text}    "Painting - Exterior" near
+
+${Painting_Interior_link}     Painting - Interior
+${Painting_Interior_text}     "Painting - Interior" near
+
+${Plumbing_link}    Plumbing
+${Plumbing_text}    "Plumbing" near
+
+${Remodeling_General_link}   Remodeling - General
+${Remodeling_General_text}   "Remodeling - General" near
+
+${Remodeling_Kitchen_Bathroom_link}    Remodeling - Kitchen & Bathroom
+${Remodeling_Kitchen_Bathroom_text}    "Remodeling - Kitchen & Bathroom" near
+
+${Roofing_link}    Roofing
+${Roofing_text}    "Roofing" near
+
+${Dentistry_General_link}    Dentistry - General
+${Dentistry_General_text}    "Dentistry - General" near
+
+${Dermatology_General_link}    Dermatology - General
+${Dermatology_General_text}    "Dermatology - General" near
+
+${EyeCare_Ophthalmology_link}   Eye Care - Ophthalmology
+${EyeCare_Ophthalmology_text}   "Eye Care - Ophthalmology" near
+
+${EyeCare_Optometry_link}      Eye Care - Optometry
+${EyeCare_Optometry_text}      "Eye Care - Optometry" near
+
+${MentalHealth_Psychiatry_link}   Mental Health - Psychiatry
+${MentalHealth_Psychiatry_text}   "Mental Health - Psychiatry" near
+
+${Orthopedics_link}   Orthopedics
+${Orthopedics_text}   "Orthopedics" near
+
+${Pediatrics_PrimaryCare_link}   Pediatrics - Primary Care
+${Pediatrics_PrimaryCare_text}   "Pediatrics - Primary Care" near
+
+${PrimaryCare_FamilyMedicine_link}     Primary Care - Family Medicine
+${PrimaryCare_FamilyMedicine_text}     "Primary Care - Family Medicine" near
+
+${PrimaryCare_InternalMedicine_link}     Primary Care - Internal Medicine
+${PrimaryCare_InternalMedicine_text}     "Primary Care - Internal Medicine" near
+
+${WomenServices_link}      Women's Services - Obstetrics & ...
+${WomenServices_text}      “Women's Services - Obstetrics & Gynecology” near
+
+${Bodywork_ClassicCar_link}   Bodywork - Classic Car
+${Bodywork_ClassicCar_text}   "Bodywork - Classic Car" near
+
+${Brakes_ClassicCar_link}    Brakes - Classic Car
+${Brakes_ClassicCar_text}    "Brakes - Classic Car" near
+
+${EngineRepair_ClassicCar_link}   Engine Repair - Classic Car
+${EngineRepair_ClassicCar_text}   "Engine Repair - Classic Car" near
+
+${Paint_ClassicCar_link}    Paint - Classic Car
+${Paint_ClassicCar_text}    "Paint - Classic Car" near
+
+${PartsLocators_ClassicCar_link}   Parts Locators - Classic Car
+${PartsLocators_ClassicCar_text}   "Parts Locators - Classic Car" near
+
+${Restorations_ClassicCar_link}     Restorations - Classic Car
+${Restorations_ClassicCar_text}     "Restorations - Classic Car" near
+
+${Service_ClassicCar_link}       Service - Classic Car
+${Service_ClassicCar_text}       "Service - Classic Car" near
+
+${Starters_ClassicCar_link}       Starters - Classic Car
+${Starters_ClassicCar_text}       "Starters - Classic Car" near
+
+${Transmission_ClassicCar_link}   Transmission - Classic Car
+${Transmission_ClassicCar_text}    "Transmission - Classic Car" near
+
+${Upholstery_Carpet_link}          Upholstery/Carpet - Classic Car
+${Upholstery_Carpet_ClassicCar_text}      "Upholstery/Carpet - Classic Car" near

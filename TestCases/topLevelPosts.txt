@@ -1,0 +1,108 @@
+*** Settings ***
+Resource  topLevelPostsVariables.txt
+Resource  myFunctions.txt
+
+*** Keywords ***
+Sign Up First Name ${first_name} Last Name ${last_name} Email ${email} Password ${password}
+    Set Selenium Timeout  ${default_wait_time}
+    Open Browser  ${invite_url}  ${browser}
+    Set Selenium Speed  ${test_speed}
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - Cannot Reach OUR BLOCK Page
+    Set Email Subject  AJC Alert topLevelPostsEmail
+    ${test} =  Check ${our_block_text} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Close Browser
+    Run Keyword If  '${test}'=='0'  Fatal Error
+    Input Text  ${our_block_first_name}  ${first_name}
+    Input Text  ${our_block_last_name}  ${last_name}
+    Input Text  ${our_block_address1}  ${user_address1}
+    Input Text  ${our_block_address2}  ${user_address2}
+    Input Text  ${our_block_city}  ${user_city}
+    Select From List  ${our_block_state}  ${user_state}
+    Input Text  ${our_block_zip_code}  ${user_zip_code}
+    Input Text  ${our_block_email_address}  ${email}
+    Input Text  ${our_block_password}  ${password}
+    Input Text  ${our_block_password_verify}  ${password}
+    Click Button  ${our_block_create_your_account}  don't wait
+    Sleep  ${short_sleep}
+    Set Email Message  Issue - Cannot Reach Online Safety Page
+    ${test} =  Check ${online_safety_text} Visible And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Close Browser
+    Run Keyword If  '${test}'=='0'  Fatal Error
+    Input Text  ${online_safety_card_number}  ${card_number}
+    Select From List  ${online_safety_expires_month}  ${expires_month}
+    Select From List  ${online_safety_expires_year}  ${expires_year}
+    Input Text  ${online_safety_ccv}  ${ccv}
+    Click Button  ${online_safety_verify_by_credit_card}  don't wait
+    Sleep  ${short_sleep}
+    Set Email Message  Issue - Cannot Reach Success Page
+    ${test} =  Check ${success_text} Exists And On Error Send Alert
+    Click Button  ${success_next}  don't wait
+    Sleep  ${short_sleep}
+    Set Email Message  Issue - Able To Reach Done From Success
+    ${test} =  Check ${done_text} Exists And On Error Send Alert
+    Close Browser
+    Run Keyword If  '${test}'=='0'  Fatal Error
+
+Log In Email ${email} Password ${password}
+    Set Selenium Timeout  ${default_wait_time}
+    Open Browser  ${invite_url}  ${browser}
+    Set Selenium Speed  ${test_speed}
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - Cannot Reach OUR BLOCK Page
+    Set Email Subject  AJC Alert topLevelPostsEmail
+    ${test} =  Check ${our_block_text} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Close Browser
+    Run Keyword If  '${test}'=='0'  Fatal Error
+    Click Image  ${login_here_image}
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - Cannot Reach Get The Best Service Page
+    ${test} =  Check ${get_the_best_service_text} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Close Browser
+    Run Keyword If  '${test}'=='0'  Fatal Error
+    Input Text  ${get_the_best_service_email}  ${email}
+    Input Text  ${get_the_best_service_Password}  ${password}
+    Click Button  ${get_the_best_service_sign_in}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - Account Login Failed
+    ${test} =  Check ${account_text} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Close Browser
+    Run Keyword If  '${test}'=='0'  Fatal Error
+
+*** Test Cases ***
+Delete Existing Messages
+    ${filter} =  Catenate  content  is  ${user2_dummy_message}
+    ${sql_string} =  Delete From ${qna_topic} Where ${filter}
+    Execute Sql String ${sql_string} On ${alcomm}
+
+User2 Log In Successfully
+    Log In Email ${user2_email} Password ${user2_password}
+    Get Page Info
+
+User2 Post To Block
+    Input Text  ${account_post_a_question_or_comment_to_your_neighbors}  ${user2_dummy_message}
+    Click Button  ${account_post_button1}  don't wait
+    Click Button  ${before_you_post_button}  don't wait
+    Wait Until Page Contains  ${zero_minutes_ago}
+
+Verify Reception Of Email And Delete It
+    ${query} =  Catenate  SEPARATOR=  "  ${invite_email_title}  ")
+    ${query} =  Catenate  (HEADER Subject  ${query}
+    ${query} =  Convert To String  ${query}
+    ${test}  ${email_id} =  Run Keyword And Ignore Error  Search Email  ${query}
+    Run Keyword If  '${test}'=='PASS'  Delete Email  ${email_id}
+    Run Keyword If  '${test}'=='FAIL'  Set Email Message  Issue - Email Not Found
+    Run Keyword If  '${test}'=='FAIL'  Alert
+    Run Keyword If  '${test}'=='FAIL'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='FAIL'  Fail
+
+Delete Messages Send Test Summary And Close Browser
+    ${filter} =  Catenate  content  is  ${user2_dummy_message}
+    ${sql_string} =  Delete From ${qna_topic} Where ${filter}
+    Execute Sql String ${sql_string} On ${alcomm}
+    ${temp} =  Catenate  Test completed with  ${test_counter}  out of 1 failures!
+    Set Email Message  ${temp}
+    Set Email Subject  AJC Summary topLevelPostsEmail
+    Alert
+    Close Browser
+    Log  ${page_info}

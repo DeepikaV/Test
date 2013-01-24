@@ -1,0 +1,4 @@
+    \    Run Keyword If  '${list_item_end}'=='${pass}'
+    \    ...    Run Keyword If  '${review_text_done}'=='${fail}'  Append Blank Space
+    \    Run Keyword If  '${list_item_end}'=='${pass}'
+    \    ...    Run Keyword If  '${review_text_done}'=='${fail}'  Set Test Variable  ${review_text_done}  ${pass}

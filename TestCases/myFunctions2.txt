@@ -1,0 +1,251 @@
+*** Settings ***
+Library  myFunctions2.py
+Library  String
+Library  Collections
+Library  SeleniumLibrary
+Library  OperatingSystem
+Library  DatabaseLibrary
+
+*** Variables ***
+${page_info}  
+${subject}  
+${message}  
+${random_gmail}  
+${test_counter}  0
+${row_counter}  0
+${cell_counter}  0
+
+${destination_address}  evantam@hotmail.com
+${database_api_module_name}  MySQLdb
+${database_host}  50.18.204.183
+${database_port}  2217
+${alshare}  alshare
+${aldeals}  aldeals
+${alcomm}  alcomm
+${website_alusercache}  website_alusercache
+${alsync_dynamicconfiguration}  alsync_dynamicconfiguration
+${alsync_usabilitytestassignment}  alsync_usabilitytestassignment
+${qna_topic}  qna_topic
+${nothing}  nothing
+${all}  *
+${null}  null
+${not_null}  not_null
+${pass}  PASS
+${fail}  FAIL
+${right_arrow}  >
+${html_end_table}  </tbody
+${html_end_row}  </tr
+${html_end_cell}  </td
+${gmail_end_string}  @gmail.com
+
+*** Keywords ***
+Query ${sql_string} On ${database_name}
+    Connect To Database  ${database_api_module_name}  ${database_name}  ${database_name}  ${database_name}  ${database_host}  ${database_port}
+    ${result} =  Query  ${sql_string}
+    [Return]  ${result}
+
+Execute Sql String ${sql_string} On ${database_name}
+    Connect To Database  ${database_api_module_name}  ${database_name}  ${database_name}  ${database_name}  ${database_host}  ${database_port}
+    Run Keyword And Ignore Error  Execute Sql String  ${sql_string}
+
+Random Gmail
+    ${temp} =  Generate Random String  8  [LETTERS][NUMBERS]
+    ${temp} =  Catenate  SEPARATOR=  ${temp}  ${gmail_end_string}
+    Set Suite Variable  ${random_gmail}  ${temp}
+
+Generate ${key} Is ${value} String
+    ${temp} =  Catenate  SEPARATOR=  '  ${value}  '
+    ${sql_string} =  Catenate  ${key}  =  ${temp}
+    ${temp} =  Catenate  ${key}  =  ''
+    ${sql_string} =  Set Variable If  '${value}'=='${nothing}'  ${temp}  ${sql_string}
+    ${temp} =  Catenate  ${key}  is  null
+    ${sql_string} =  Set Variable If  '${value}'=='${null}'  ${temp}  ${sql_string}
+    ${temp} =  Catenate  ${key}  is  not  null
+    ${sql_string} =  Set Variable If  '${value}'=='${not_null}'  ${temp}  ${sql_string}
+    [Return]  ${sql_string}
+
+Update ${table} Set ${pairs} Where ${filter}
+    ${word_list} =  Split String  ${pairs}
+    ${list_length} =  Get Length  ${word_list}
+    ${list_length} =  Evaluate  ${list_length} - 1
+    ${key} =  Get From List  ${word_list}  0
+    ${value} =  Get From List  ${word_list}  2
+    ${temp} =  Generate ${key} Is ${value} String
+    ${sql_string} =  Catenate  update  ${table}  set  ${temp}
+    : FOR  ${first_index}  IN RANGE  4  ${list_length}  4
+    \  ${last_index} =  Evaluate  ${first_index} + 2
+    \  ${key} =  Get From List  ${word_list}  ${first_index}
+    \  ${value} =  Get From List  ${word_list}  ${last_index}
+    \  ${temp} =  Generate ${key} Is ${value} String
+    \  ${sql_string} =  Catenate  ${sql_string}  and  ${temp}
+    ${word_list} =  Split String  ${filter}
+    ${list_length} =  Get Length  ${word_list}
+    ${list_length} =  Evaluate  ${list_length} - 1
+    ${key} =  Get From List  ${word_list}  0
+    ${value} =  Get From List  ${word_list}  2
+    ${temp} =  Generate ${key} Is ${value} String
+    ${sql_string} =  Catenate  ${sql_string}  where  ${temp}
+    : FOR  ${first_index}  IN RANGE  4  ${list_length}  4
+    \  ${last_index} =  Evaluate  ${first_index} + 2
+    \  ${key} =  Get From List  ${word_list}  ${first_index}
+    \  ${value} =  Get From List  ${word_list}  ${last_index}
+    \  ${temp} =  Generate ${key} Is ${value} String
+    \  ${sql_string} =  Catenate  ${sql_string}  and  ${temp}
+    [Return]  ${sql_string}
+
+Select ${thing} From ${table} Where ${filter}
+    ${word_list} =  Split String  ${filter}
+    ${list_length} =  Get Length  ${word_list}
+    ${list_length} =  Evaluate  ${list_length} - 1
+    ${key} =  Get From List  ${word_list}  0
+    ${value} =  Get From List  ${word_list}  2
+    ${temp} =  Generate ${key} Is ${value} String
+    ${sql_string} =  Catenate  select  ${thing}  from  ${table}  where  ${temp}
+    : FOR  ${first_index}  IN RANGE  4  ${list_length}  4
+    \  ${last_index} =  Evaluate  ${first_index} + 2
+    \  ${key} =  Get From List  ${word_list}  ${first_index}
+    \  ${value} =  Get From List  ${word_list}  ${last_index}
+    \  ${temp} =  Generate ${key} Is ${value} String
+    \  ${sql_string} =  Catenate  ${sql_string}  and  ${temp}
+    [Return]  ${sql_string}
+
+Delete From ${table} Where ${filter}
+    ${word_list} =  Split String  ${filter}
+    ${list_length} =  Get Length  ${word_list}
+    ${list_length} =  Evaluate  ${list_length} - 1
+    ${key} =  Get From List  ${word_list}  0
+    ${value} =  Get From List  ${word_list}  2
+    ${temp} =  Generate ${key} Is ${value} String
+    ${sql_string} =  Catenate  delete  from  ${table}  where  ${temp}
+    : FOR  ${first_index}  IN RANGE  4  ${list_length}  4
+    \  ${last_index} =  Evaluate  ${first_index} + 2
+    \  ${key} =  Get From List  ${word_list}  ${first_index}
+    \  ${value} =  Get From List  ${word_list}  ${last_index}
+    \  ${temp} =  Generate ${key} Is ${value} String
+    \  ${sql_string} =  Catenate  ${sql_string}  and  ${temp}
+    [Return]  ${sql_string}
+
+Size Of Table ${table_id}
+    Set Suite Variable  ${row_counter}  0
+    Set Suite Variable  ${cell_counter}  0
+    ${inside_table} =  Set Variable  ${fail}
+    ${page_source} =  Get Source
+    ${string_list} =  Split String  ${page_source}  ${right_arrow}
+    ${string_list_length} =  Get Length  ${string_list}
+    : FOR  ${index}  IN RANGE  0  ${string_list_length}
+    \    ${string} =  Get From List  ${string_list}  ${index}
+    \    ${table_start}  ${temp} =  Run Keyword And Ignore Error  Should Contain  ${string}  ${table_id}
+    \    ${table_end}  ${temp} =  Run Keyword And Ignore Error  Should Contain  ${string}  ${html_end_table}
+    \    ${row_end}  ${temp} =  Run Keyword And Ignore Error  Should Contain  ${string}  ${html_end_row}
+    \    ${cell_end}  ${temp} =  Run Keyword And Ignore Error  Should Contain  ${string}  ${html_end_cell}
+    \
+    \    ${inside_table} =  Set Variable If  '${inside_table}'=='${fail}'  ${table_start}  ${inside_table}
+    \    Run Keyword If  '${inside_table}'=='PASS'
+    \    ...    Run Keyword If  '${table_end}'=='PASS'  Exit For Loop
+    \    Run Keyword If  '${inside_table}'=='PASS'
+    \    ...    Run Keyword If  '${row_end}'=='PASS'  Row Counter Plus Plus
+    \    Run Keyword If  '${inside_table}'=='PASS'
+    \    ...    Run Keyword If  '${cell_end}'=='PASS'  Cell Counter Plus Plus
+
+Get Page Info
+    ${timestamp} =  Get Time
+    ${page_source} =  Get Source
+    ${temp} =  Get Lines Containing String  ${page_source}  release/
+    ${Build_info} =  Split String  ${temp}
+    ${temp} =  Get From List  ${Build_info}  0
+    ${branch_version} =  Get Substring  ${temp}  8
+    ${temp} =  Get From List  ${Build_info}  1
+    ${build_number} =  Get Substring  ${temp}  1  -1
+    ${machine_name} =  Get From List  ${Build_info}  2
+    ${temp} =  Catenate  Timestamp:  ${timestamp}  Branch:  ${branch_version}  Build:  ${build_number}  Machine:  ${machine_name}
+    Set Suite Variable  ${page_info}  ${temp}
+
+Set Email Message  [Arguments]  ${msg}
+    Set Suite Variable  ${message}  ${msg}
+
+Set Email Subject  [Arguments]  ${sub}
+    Set Suite Variable  ${subject}  ${sub}
+
+Alert
+    Capture Page Screenshot
+    ${temp} =  Catenate  ${page_info}  Message:  ${message}
+    ${email_text} =  Convert TO String  ${temp}
+    Send Email  ${destination_address}  ${subject}  ${email_text}
+
+Take Screenshot Reference
+    Capture Page Screenshot  screenshot1.png
+
+Should Not Be Same Screenshot
+    Capture Page Screenshot  screenshot2.png
+    ${size1} =  Get File Size  screenshot1.png
+    ${size2} =  Get File Size  screenshot2.png
+    Should Not Be Equal As Integers  ${size1}  ${size2}
+
+Check ${item} Exists And On Error Send Alert
+    ${count} =  Convert To Integer  0
+    ${test}  ${result} =  Run Keyword And Ignore Error  Page Should Contain  ${item}
+    ${temp} =  Set Variable  ${count + 1}
+    ${count} =  Set Variable If  '${test}'=='PASS'  ${temp}  ${count}
+    ${test}  ${result} =  Run Keyword And Ignore Error  Page Should Contain Button  ${item}
+    ${temp} =  Set Variable  ${count + 1}
+    ${count} =  Set Variable If  '${test}'=='PASS'  ${temp}  ${count}
+    ${test}  ${result} =  Run Keyword And Ignore Error  Page Should Contain Checkbox  ${item}
+    ${temp} =  Set Variable  ${count + 1}
+    ${count} =  Set Variable If  '${test}'=='PASS'  ${temp}  ${count}
+    ${test}  ${result} =  Run Keyword And Ignore Error  Page Should Contain Element  ${item}
+    ${temp} =  Set Variable  ${count + 1}
+    ${count} =  Set Variable If  '${test}'=='PASS'  ${temp}  ${count}
+    ${test}  ${result} =  Run Keyword And Ignore Error  Page Should Contain Image  ${item}
+    ${temp} =  Set Variable  ${count + 1}
+    ${count} =  Set Variable If  '${test}'=='PASS'  ${temp}  ${count}
+    ${test}  ${result} =  Run Keyword And Ignore Error  Page Should Contain Link  ${item}
+    ${temp} =  Set Variable  ${count + 1}
+    ${count} =  Set Variable If  '${test}'=='PASS'  ${temp}  ${count}
+    ${test}  ${result} =  Run Keyword And Ignore Error  Page Should Contain Radio Button  ${item}
+    ${temp} =  Set Variable  ${count + 1}
+    ${count} =  Set Variable If  '${test}'=='PASS'  ${temp}  ${count}
+    ${test}  ${result} =  Run Keyword And Ignore Error  Page Should Contain Textfield  ${item}
+    ${temp} =  Set Variable  ${count + 1}
+    ${count} =  Set Variable If  '${test}'=='PASS'  ${temp}  ${count}
+    Run Keyword If  '${count}'=='0'  Alert
+    [Return]  ${count}
+
+Check ${item} Visible And On Error Send Alert
+    ${test}  ${result} =  Run Keyword And Ignore Error  Element Should Be Visible  ${item}
+    Run Keyword If  '${test}'=='FAIL'  Alert
+    ${count} =  Convert To Integer  0
+    ${temp} =  Set Variable  ${count + 1}
+    ${count} =  Set Variable If  '${test}'=='PASS'  ${temp}  ${count}
+    [Return]  ${count}
+
+Check ${item} Invisible And On Error Send Alert
+    ${test}  ${result} =  Run Keyword And Ignore Error  Element Should Not Be Visible  ${item}
+    Run Keyword If  '${test}'=='FAIL'  Alert
+    ${count} =  Convert To Integer  0
+    ${temp} =  Set Variable  ${count + 1}
+    ${count} =  Set Variable If  '${test}'=='PASS'  ${temp}  ${count}
+    [Return]  ${count}
+
+Check ${sql_string} Is In ${database_name} And On Error Send Alert
+    Connect To Database  ${database_api_module_name}  ${database_name}  ${database_name}  ${database_name}  ${database_host}  ${database_port}
+    ${test}  ${result} =  Run Keyword And Ignore Error  Check If Exists In Database  ${sql_string}
+    Run Keyword If  '${test}'=='FAIL'  Alert
+    ${count} =  Convert To Integer  0
+    ${temp} =  Set Variable  ${count + 1}
+    ${count} =  Set Variable If  '${test}'=='PASS'  ${temp}  ${count}
+    [Return]  ${count}
+
+Test Counter Plus Plus
+    ${temp} =  Convert To Integer  ${test_counter}
+    ${temp} =  Set Variable  ${temp + 1}
+    Set Suite Variable  ${test_counter}  ${temp}
+
+Row Counter Plus Plus
+    ${temp} =  Convert To Integer  ${row_counter}
+    ${temp} =  Set Variable  ${temp + 1}
+    Set Suite Variable  ${row_counter}  ${temp}
+
+Cell Counter Plus Plus
+    ${temp} =  Convert To Integer  ${cell_counter}
+    ${temp} =  Set Variable  ${temp + 1}
+    Set Suite Variable  ${cell_counter}  ${temp}

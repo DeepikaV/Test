@@ -1,0 +1,101 @@
+*** Settings ***
+Documentation  Resource file for postAndResponse.txt
+
+*** Variables ***
+${database_api_module_name}  MySQLdb
+${database_host}  50.18.204.183
+${database_port}  2217
+
+${database_alshare_name}  alshare
+${database_alshare_user_name}  aldeals
+${database_alshare_password}  aldeals
+
+${database_alcomm_name}  alcomm
+${database_alcomm_user_name}  alcomm
+${database_alcomm_password}  alcomm
+
+${website_alusercache}  website_alusercache
+${qna_topic}  qna_topic
+
+${browser}  firefox
+${default_wait_time}  60
+${test_speed}  1
+${short_sleep}  30
+${micro_sleep}  15
+${invite_url}  http://qa2community.ca.angieslist.com/landing/
+
+
+${user1_first_name}  ajctest
+${user1_last_name}  friend
+${user1_email}  ajctestfriend@gmail.com
+${user1_password}  Welcometoajc
+
+${user2_first_name}  ajctest
+${user2_last_name}  dummy
+${user2_email}  nonexistentaccount@gmail.com
+${user2_password}  Welcometoajc
+
+${user_address1}  1592 Denali Way
+${user_address2}  United States
+${user_city}  San Jose
+${user_state}  CA
+${user_zip_code}  95122
+
+${card_number}  4111111111111111
+${expires_month}  12
+${expires_year}  2014
+${ccv}  123
+
+${empty}
+${content}  content
+${last_name}  last_name
+
+${our_block_first_name}  firstName
+${our_block_last_name}  lastName
+${our_block_address1}  address1
+${our_block_address2}  address2
+${our_block_city}  city
+${our_block_state}  state
+${our_block_zip_code}  zip
+${our_block_email_address}  signUpEmail
+${our_block_password}  password
+${our_block_password_verify}  password_verify
+${our_block_error_image}  /static/images/error.png
+${our_block_error_message}  registrationError
+${our_block_create_your_account}  submitRegistration
+
+${online_safety_card_number}  cc
+${online_safety_expires_month}  exp_month
+${online_safety_expires_year}  exp_year
+${online_safety_ccv}  ccv
+${online_safety_verify_by_credit_card}  validateCCBtn
+
+${success_next}  Next
+
+${start_using_our_block}  Start Using Our Block
+
+${our_block_text}  Want to meet new neighbors, find out which are the best local schools
+${online_safety_text}  communityRegistrationStep2
+${members_account_text}  Our Block: Safety, news, events. Neighbors have a lot to talk about
+${success_text}  Success! Thanks for registering for Our Block!
+${done_text}  Now you and your neighbors can start talking at Our Block!
+${get_the_best_service_text}  Find detailed reviews on roofers, plumbers, house cleaners, dentists and more!
+${account_text}  Safety, news, events. Neighbors have a lot to talk about.
+
+${login_here_image}  /static/images/already-an-al-member.jpg
+${get_the_best_service_email}  UserNameTextbox
+${get_the_best_service_Password}  UserPasswordTextbox
+${get_the_best_service_sign_in}  ctl00$ContentPlaceHolderMainContent$LoginControl$LoginButton
+
+${account_post_a_question_or_comment_to_your_neighbors}  posttextarea
+${account_post_button1}  postBtn
+${account_reply_button}  Reply
+${account_reply}  content
+${account_post_button2}  Post
+${before_you_post_button}  Submit my post on Our Block!
+
+${zero_minutes_ago}  0 minutes ago
+${user1_dummy_message}  User1 said RAWR!
+${user2_dummy_message}  User2 said Grrr!
+
+${invite_email_title}  ajctest has responded to your post!

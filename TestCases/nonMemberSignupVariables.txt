@@ -1,0 +1,66 @@
+*** Settings ***
+Documentation  Resource file for nonMemberSignup.txt
+
+*** Variables ***
+${browser}  firefox
+${default_wait_time}  300
+${long_sleep}  60
+${short_sleep}  30
+${micro_sleep}  15
+${test_speed}  0.5
+${invite_url}  http://qa2community.ca.angieslist.com/landing/
+
+
+${first_name}  ajctest
+${last_name}  friend
+${email_address}  ajctestfriend@gmail.com
+${address1}  666 Highway To Hell
+${address2}  United States
+${city}  Las Vegas
+${state}  NV
+${zip_code}  89109
+${password}  12345678
+
+${card_number}  4111111111111111
+${expires_month}  12
+${expires_year}  2014
+${ccv}  123
+${empty}  
+
+
+${how_did_you_hear_about_us}  Other
+${home_phone1}  666
+${home_phone2}  666
+${home_phone3}  6666
+${select_mnm}  3
+
+
+${our_block_first_name}  firstName
+${our_block_last_name}  lastName
+${our_block_address1}  address1
+${our_block_address2}  address2
+${our_block_city}  city
+${our_block_state}  state
+${our_block_zip_code}  zip
+${our_block_email_address}  signUpEmail
+${our_block_password}  password
+${our_block_password_verify}  password_verify
+${our_block_error_image}  /static/images/error.png
+${our_block_error_message}  registrationError
+${our_block_create_your_account}  submitRegistration
+
+
+${online_safety_card_number}  cc
+${online_safety_expires_month}  exp_month
+${online_safety_expires_year}  exp_year
+${online_safety_ccv}  ccv
+${online_safety_verify_by_credit_card}  validateCCBtn
+
+${success_next}  Next
+
+${start_using_our_block}  Start Using Our Block
+${our_block_text}  Want to meet new neighbors, find out which are the best local schools
+${online_safety_text}  communityRegistrationStep2
+${members_account_text}  Our Block: Safety, news, events. Neighbors have a lot to talk about
+${success_text}  Success! Thanks for registering for Our Block!
+${done_text}  Now you and your neighbors can start talking at Our Block!

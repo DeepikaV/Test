@@ -1,0 +1,17 @@
+*** Settings ***
+Documentation  Resource file for databaseExample.txt
+Library  DatabaseLibrary
+
+
+*** Variables ***
+${database_api_module_name}  MySQLdb
+${database_name}  alshare
+${database_user_name}  aldeals
+${database_password}  aldeals
+${database_host}  50.18.204.183
+${database_port}  2217
+
+${database_table_name}  website_alusercache
+
+${first_name}  'TOM & JOYCE'
+${last_name}  'BRADY'

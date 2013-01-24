@@ -1,0 +1,370 @@
+*** Settings ***
+Resource  footerLinksVariables.txt
+Resource  myFunctions.txt
+
+*** Keywords ***
+Check Deals And Buy Now
+    Set Email Message  Issue - Successfully Reached DEALS AND BUY NOW Page
+    Set Email Subject  AJC Alert footerLinks
+    ${test} =  Check ${deals_and_buynow_text} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Close Browser
+    Run Keyword If  '${test}'=='0'  Fatal Error
+
+*** Test Cases ***
+Successfully Reached GET THE BEST SERVICE Page
+    Set Selenium Timeout  ${default_wait_time}
+    Open Browser  ${landing_url}  ${browser}
+    Set Selenium Speed  ${test_speed}
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - Successfully Reached GET THE BEST SERVICE Page
+    Set Email Subject  AJC Alert footerLinks
+    ${test} =  Check ${get_the_best_service_text} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Close Browser
+    Run Keyword If  '${test}'=='0'  Fatal Error
+
+User Log In Successfully And Load Deals And Buy Now
+    Input Text  ${get_the_best_service_email}  ${email_address}
+    Input Text  ${get_the_best_service_Password}  ${password}
+    Click Button  ${get_the_best_service_sign_in}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Deals And Buy Now
+    Get Page Info
+
+User Reached My Favorites
+    Click Link  ${my_favorites_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached My Favorites
+    ${test} =  Check ${my_favorites_text} Exists And On Error Send Alert
+    Go To  ${deals_and_buynow_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Deals And Buy Now
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+User Reached My Purchase History
+    Click Link  ${my_purchase_history_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached My Purchase History
+    ${test} =  Check ${my_purchase_history_text} Exists And On Error Send Alert
+    Go To  ${deals_and_buynow_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Deals And Buy Now
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+User Reached My Search History
+    Click Link  ${my_search_history_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached My Search History
+    ${test} =  Check ${my_search_history_text} Exists And On Error Send Alert
+    Go To  ${deals_and_buynow_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Deals And Buy Now
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+User Reached My Messages
+    Click Link  ${my_messages_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached My Messages
+    ${test} =  Check ${my_messages_text} Exists And On Error Send Alert
+    Go To  ${deals_and_buynow_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Deals And Buy Now
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+User Reached My Reviews
+    Click Link  ${my_reviews_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached My Reviews
+    ${test} =  Check ${my_reviews_text} Exists And On Error Send Alert
+    Go To  ${deals_and_buynow_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Deals And Buy Now
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+User Reached My Complaint Resolutions
+    Click Link  ${my_complaint_resolutions_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached My Complaint Resolutions
+    ${test} =  Check ${my_complaint_resolutions_text} Exists And On Error Send Alert
+    Go To  ${deals_and_buynow_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Deals And Buy Now
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+User Reached Manage My Account
+    Click Link  ${manage_my_account_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Manage My Account
+    ${test} =  Check ${manage_my_account_text} Exists And On Error Send Alert
+    Go To  ${deals_and_buynow_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Deals And Buy Now
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+User Reached Manage My Subscriptions
+    Click Link  ${manage_my_subscriptions_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Manage My Subscriptions
+    ${test} =  Check ${manage_my_subscriptions_text} Exists And On Error Send Alert
+    Go To  ${deals_and_buynow_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Deals And Buy Now
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+User Reached Contact Preferences
+    Click Link  ${contact_preferences_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Contact Preferences
+    ${test} =  Check ${contact_preferences_text} Exists And On Error Send Alert
+    Go To  ${deals_and_buynow_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Deals And Buy Now
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+User Reached Invite A Friend
+    Click Link  ${invite_a_friend_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Invite A Friend
+    ${test} =  Check ${invite_a_friend_text} Exists And On Error Send Alert
+    Go To  ${deals_and_buynow_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Deals And Buy Now
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+User Reached Gift Memberships
+    Click Link  ${gift_memberships_link}  don't wait
+    Sleep  ${micro_sleep}
+    Select Window  ${gift_memberships_window_label}
+    Set Email Message  Issue - User Reached Gift Memberships
+    ${test} =  Check ${gift_memberships_text} Exists And On Error Send Alert
+    Close Window
+    Select Window
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+User Reached Member Benefits
+    Click Link  ${member_benefits_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Member Benefits
+    ${test} =  Check ${member_benefits_text} Exists And On Error Send Alert
+    Go To  ${deals_and_buynow_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Deals And Buy Now
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+User Reached The Big Deal Website
+    Click Link  ${the_big_deal_website_link}  don't wait
+    Sleep  ${micro_sleep}
+    Select Window  ${the_big_deal_website_window_label}
+    Set Email Message  Issue - User Reached The Big Deal Website
+    ${test} =  Check ${the_big_deal_website_text} Exists And On Error Send Alert
+    Close Window
+    Select Window
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+User Reached Advanced Search
+    Click Link  ${advanced_search_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Advanced Search
+    ${test} =  Check ${advanced_search_text} Exists And On Error Send Alert
+    Go To  ${deals_and_buynow_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Deals And Buy Now
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+User Reached All Categories
+    Click Link  ${all_categories_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached All Categories
+    ${test} =  Check ${all_categories_text} Exists And On Error Send Alert
+    Go To  ${deals_and_buynow_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Deals And Buy Now
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+User Reached Write A Review
+    Click Link  ${write_a_review_link}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - User Reached Write A Review
+    ${test} =  Check ${write_a_review_text} Exists And On Error Send Alert
+    Go To  ${deals_and_buynow_tab}
+    Wait Until Page Loaded  ${default_wait_time}
+    Check Deals And Buy Now
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+User Reached Angies List Answers
+    Click Link  ${angies_list_answers_link}  don't wait
+    Sleep  ${micro_sleep}
+    Select Window  ${angies_list_answers_window_label}
+    Set Email Message  Issue - User Reached Angies List Answers
+    ${test} =  Check ${angies_list_answers_text} Exists And On Error Send Alert
+    Close Window
+    Select Window
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+User Reached Angies List Magazine
+    Click Link  ${angies_list_magazine_link}  don't wait
+    Sleep  ${micro_sleep}
+    Select Window  ${angies_list_magazine_window_label}
+    Set Email Message  Issue - User Reached Angies List Magazine
+    ${test} =  Check ${angies_list_magazine_text} Exists And On Error Send Alert
+    Close Window
+    Select Window
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+User Reached Angies List Videos
+    Click Link  ${angies_list_videos_link}  don't wait
+    Sleep  ${micro_sleep}
+    Select Window  ${angies_list_videos_window_label}
+    Set Email Message  Issue - User Reached Angies List Videos
+    ${test} =  Check ${angies_list_videos_text} Exists And On Error Send Alert
+    Close Window
+    Select Window
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+User Reached Angies List Marketplace
+    Click Link  ${angies_list_marketplace_link}  don't wait
+    Sleep  ${micro_sleep}
+    Select Window  ${angies_list_marketplace_window_label}
+    Set Email Message  Issue - User Reached Angies List Marketplace
+    Set Email Subject  AJC Alert footerLinks
+    ${test} =  Check ${angies_list_marketplace_text} Exists And On Error Send Alert
+    Close Window
+    Select Window
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+User Reached Iphone And Ipad App
+    Click Link  ${iphone_and_ipad_app_link}  don't wait
+    Sleep  ${micro_sleep}
+    Select Window  ${iphone_and_ipad_app_window_label}
+    Set Email Message  Issue - User Reached Iphone And Ipad App
+    ${test} =  Check ${iphone_and_ipad_app_text} Exists And On Error Send Alert
+    Close Window
+    Select Window
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+User Reached Android App
+    Click Link  ${android_app_link}  don't wait
+    Sleep  ${micro_sleep}
+    Select Window  ${android_app_window_label}
+    Set Email Message  Issue - User Reached Android App
+    ${test} =  Check ${android_app_text} Exists And On Error Send Alert
+    Close Window
+    Select Window
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+User Reached Faq
+    Click Link  ${faq_link}  don't wait
+    Sleep  ${micro_sleep}
+    Select Window  ${faq_window_label}
+    Set Email Message  Issue - User Reached Faq
+    ${test} =  Check ${faq_text} Exists And On Error Send Alert
+    Close Window
+    Select Window
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+User Reached Contact Us
+    Click Link  ${contact_us_link}  don't wait
+    Sleep  ${micro_sleep}
+    Select Window  ${contact_us_window_label}
+    Set Email Message  Issue - User Reached Contact Us
+    ${test} =  Check ${contact_us_text} Exists And On Error Send Alert
+    Close Window
+    Select Window
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+User Reached Angie Hicks
+    Click Link  ${angie_hicks_link}  don't wait
+    Sleep  ${micro_sleep}
+    Select Window  ${angie_hicks_window_label}
+    Set Email Message  Issue - User Reached Angie Hicks
+    ${test} =  Check ${angie_hicks_text} Exists And On Error Send Alert
+    Close Window
+    Select Window
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+User Reached Press Center
+    Click Link  ${press_center_link}  don't wait
+    Sleep  ${micro_sleep}
+    Select Window  ${press_center_window_label}
+    Set Email Message  Issue - User Reached Press Center
+    ${test} =  Check ${press_center_text} Exists And On Error Send Alert
+    Close Window
+    Select Window
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+User Reached Careers
+    Click Link  ${careers_link}  don't wait
+    Sleep  ${micro_sleep}
+    Select Window  ${careers_window_label}
+    Set Email Message  Issue - User Reached Careers
+    ${test} =  Check ${careers_text} Exists And On Error Send Alert
+    Close Window
+    Select Window
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+User Reached Investor Relations
+    Click Link  ${investor_relations_link}  don't wait
+    Sleep  ${micro_sleep}
+    Select Window  ${investor_relations_window_label}
+    Set Email Message  Issue - User Reached Investor Relations
+    ${test} =  Check ${investor_relations_text} Exists And On Error Send Alert
+    Close Window
+    Select Window
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+User Reached Privacy Policy
+    Click Link  ${privacy_policy_link}  don't wait
+    Sleep  ${micro_sleep}
+    Select Window  ${privacy_policy_window_label}
+    Set Email Message  Issue - User Reached Privacy Policy
+    ${test} =  Check ${privacy_policy_text} Exists And On Error Send Alert
+    Close Window
+    Select Window
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+User Reached Membership Agreement
+    Click Link  ${membership_agreement_link}  don't wait
+    Sleep  ${micro_sleep}
+    Select Window  ${membership_agreement_window_label}
+    Set Email Message  Issue - User Reached Membership Agreement
+    ${test} =  Check ${membership_agreement_text} Exists And On Error Send Alert
+    Close Window
+    Select Window
+    Run Keyword If  '${test}'=='0'  Test Counter Plus Plus
+    Run Keyword If  '${test}'=='0'  Fail
+
+Send Test Summary
+    ${temp} =  Catenate  Test completed with  ${test_counter}  out of 30 failures!
+    Set Email Message  ${temp}
+    Set Email Subject  AJC Summary footerLinks
+    Alert
+    Close Browser
+    Log  ${page_info}

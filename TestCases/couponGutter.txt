@@ -1,0 +1,32 @@
+*** Settings ***
+Resource  couponGutterVariables.txt
+Resource  myFunctions.txt
+
+*** Keywords ***
+Log In Email ${email} Password ${password}
+    Set Selenium Timeout  ${default_wait_time}
+    Open Browser  ${landing_url}  ${browser}
+    Set Selenium Speed  ${test_speed}
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - Cannot Reach OUR BLOCK Page
+    Set Email Subject  AJC Alert couponGutter
+    ${test} =  Check ${get_the_best_service_text} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Close Browser
+    Run Keyword If  '${test}'=='0'  Fatal Error
+    Input Text  ${get_the_best_service_email}  ${email}
+    Input Text  ${get_the_best_service_Password}  ${password}
+    Click Button  ${get_the_best_service_sign_in}  don't wait
+    Wait Until Page Loaded  ${default_wait_time}
+    Set Email Message  Issue - Account Login Failed
+    ${test} =  Check ${deals_and_buynow_text} Exists And On Error Send Alert
+    Run Keyword If  '${test}'=='0'  Close Browser
+    Run Keyword If  '${test}'=='0'  Fatal Error
+
+*** Test Cases ***
+User Log In Successfully And Load Deals And Buy Now
+    Log In Email ${email_address} Password ${password}
+    Get Page Info
+
+Search For An Item Near User Location
+    Input Text  ${deals_and_buynow_search_box}  ${search_item}
+    Click Button  ${deals_and_buynow_search_button}  don't wait
